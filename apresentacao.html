@@ -268,12 +268,13 @@
                 const partNumber = event.data.part;
                 const currentSlide = event.data.slide;
                 const total = totalSlides[partNumber];
+                const lastSlideIndex = total - 1;
                 
-                console.log(`📊 Part ${partNumber}: slide ${currentSlide}/${total-1}`);
+                console.log(`📊 Part ${partNumber}: slide ${currentSlide} (last: ${lastSlideIndex})`);
                 
                 // If reached the last slide, mark part as completed
-                if (currentSlide >= total - 1) {
-                    console.log(`✅ Part ${partNumber} completed!`);
+                if (currentSlide >= lastSlideIndex) {
+                    console.log(`✅ Part ${partNumber} completed! Button marked as blue.`);
                     completedParts.add(partNumber);
                     markPartAsCompleted(partNumber);
                 }
