@@ -269,30 +269,32 @@
 
         /* Timeline Vertical */
         .timeline-v {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 60px auto;
-            position: relative;
-            padding-left: 100px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
         }
 
         .timeline-v::before {
-            content: '';
-            position: absolute;
-            left: 40px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, #007AFF, #5856D6);
+            display: none;
         }
 
         .timeline-step {
-            margin-bottom: 80px;
-            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .timeline-step:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 122, 255, 0.5);
         }
 
         .timeline-step-icon {
-            position: absolute;
-            left: -60px;
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, #007AFF, #5856D6);
@@ -302,10 +304,11 @@
             justify-content: center;
             font-size: 2.5rem;
             box-shadow: 0 10px 40px rgba(0, 122, 255, 0.4);
+            margin: 0 auto 20px;
         }
 
         .timeline-step-content {
-            text-align: left;
+            text-align: center;
         }
 
         .timeline-step h4 {
