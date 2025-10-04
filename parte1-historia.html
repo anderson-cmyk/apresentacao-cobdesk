@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parte 1: A Jornada de André Calabró</title>
-                    <style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
@@ -22,260 +22,339 @@
         }
 
         .slide {
-            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100vh;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 96.0px;
-            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 80px;
         }
 
         .slide.active {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
         }
 
         .slide-content {
-            max-width: 1680.0px;
+            max-width: 1400px;
             width: 100%;
             text-align: center;
         }
 
-        .slide-title {
-            font-size: 7.2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #30D158, #007AFF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 36.0px;
-            letter-spacing: -3.6px;
+        /* Navigation */
+        .slide-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
         }
 
-        .slide-subtitle {
-            font-size: 3.0rem;
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #007AFF;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .nav-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
             color: #98989D;
-            margin-bottom: 72.0px;
+            font-size: 0.9rem;
+            z-index: 100;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 7rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+        }
+
+        h3 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #98989D;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .subtitle {
+            font-size: 2.5rem;
+            color: #98989D;
             font-weight: 400;
         }
 
-        .section-title {
-            font-size: 4.8rem;
-            font-weight: 800;
-            margin-bottom: 48.0px;
+        .highlight {
+            color: #007AFF;
+            font-weight: 600;
+        }
+
+        /* Icon */
+        .icon {
+            font-size: 10rem;
+            margin-bottom: 40px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Quote */
+        .quote {
+            font-size: 3rem;
+            font-weight: 600;
+            line-height: 1.4;
             color: #FFFFFF;
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border-left: 6px solid #007AFF;
+            text-align: left;
+            position: relative;
         }
 
-        .highlight-box {
-            background: rgba(48, 209, 88, 0.1);
-            border: 2.4px solid #30D158;
-            border-radius: 31.2px;
-            padding: 48.0px;
-            margin: 36.0px 0;
+        .quote::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            color: #007AFF;
+            opacity: 0.3;
         }
 
-        .highlight-number {
-            font-size: 7.2rem;
-            font-weight: 900;
-            color: #30D158;
-            margin-bottom: 19.2px;
+        .quote-author {
+            font-size: 1.5rem;
+            color: #98989D;
+            margin-top: 30px;
+            font-weight: 400;
         }
 
-        .highlight-text {
-            font-size: 2.4rem;
-            color: #FFFFFF;
-            line-height: 1.6;
-        }
-
+        /* Grid */
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 36.0px;
-            margin: 48.0px 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 36.0px;
-            margin: 48.0px 0;
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24.0px);
-            border: 2.4px solid rgba(255, 255, 255, 0.1);
-            border-radius: 31.2px;
-            padding: 48.0px;
-            text-align: left;
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
 
         .card-icon {
-            font-size: 4.8rem;
-            margin-bottom: 24.0px;
+            font-size: 4rem;
+            margin-bottom: 25px;
             display: block;
         }
 
-        .card-title {
-            font-size: 2.4rem;
-            font-weight: 700;
-            margin-bottom: 19.2px;
-            color: #007AFF;
+        .card h4 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        .card-text {
-            font-size: 1.9rem;
-            color: #98989D;
+        .card p {
+            font-size: 1.3rem;
             line-height: 1.6;
+            color: #98989D;
         }
 
-        .timeline {
+        /* Big Number */
+        .big-number {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 40px 0;
+        }
+
+        /* Timeline Horizontal */
+        .timeline-h {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin: 60.0px 0;
+            align-items: center;
+            margin-top: 80px;
             position: relative;
+            padding: 0 50px;
         }
 
-        .timeline::before {
+        .timeline-h::before {
             content: '';
             position: absolute;
-            top: 60.0px;
+            top: 50%;
             left: 10%;
             right: 10%;
-            height: 4.8px;
-            background: linear-gradient(90deg, #30D158, #007AFF);
+            height: 3px;
+            background: linear-gradient(to right, #007AFF, #5856D6);
+            transform: translateY(-50%);
         }
 
-        .timeline-item {
+        .timeline-h-item {
             flex: 1;
             text-align: center;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .timeline-dot {
-            width: 120.0px;
-            height: 120.0px;
-            background: #30D158;
+        .timeline-h-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
             border-radius: 50%;
-            margin: 0 auto 24.0px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.6rem;
-            font-weight: 900;
-            color: #000;
+            font-size: 3rem;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 40px rgba(0, 122, 255, 0.4);
         }
 
-        .timeline-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 12.0px;
-            color: #FFFFFF;
+        .timeline-h-item h4 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        .timeline-desc {
-            font-size: 1.7rem;
+        .timeline-h-item p {
+            font-size: 1.1rem;
             color: #98989D;
-        }
-
-        .kpi-list {
-            text-align: left;
-            max-width: 1080.0px;
-            margin: 48.0px auto;
-        }
-
-        .kpi-item {
-            background: rgba(0, 122, 255, 0.1);
-            border-left: 6.0px solid #007AFF;
-            padding: 30.0px 36.0px;
-            margin: 24.0px 0;
-            border-radius: 12.0px;
-        }
-
-        .kpi-name {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #007AFF;
-            margin-bottom: 12.0px;
-        }
-
-        .kpi-desc {
-            font-size: 1.7rem;
-            color: #98989D;
-            line-height: 1.5;
-        }
-
-        .objective-box {
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 122, 255, 0.2));
-            border: 2.4px solid rgba(255, 255, 255, 0.2);
-            border-radius: 31.2px;
-            padding: 60.0px;
-            margin: 48.0px 0;
-            text-align: left;
-        }
-
-        .objective-primary {
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: #30D158;
-            margin-bottom: 24.0px;
-        }
-
-        .objective-text {
-            font-size: 2.2rem;
-            color: #FFFFFF;
-            line-height: 1.8;
-            margin-bottom: 24.0px;
-        }
-
-        .objective-secondary {
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: #007AFF;
-            margin: 36.0px 0 24.0px;
-        }
-
-        .emphasis {
-            color: #30D158;
-            font-weight: 700;
-        }
-
-        .warning {
-            color: #FF9F0A;
-            font-weight: 700;
         }
 
         /* Responsive */
-        @media (max-width: 1536.0px) {
-            .slide { padding: 72.0px; }
-            .slide-title { font-size: 5.8rem; }
-            .section-title { font-size: 3.8rem; }
-            .grid-3 { grid-template-columns: 1fr; }
+        @media (max-width: 1200px) {
+            .slide { padding: 60px 40px; }
+            h1 { font-size: 5rem; }
+            h2 { font-size: 4rem; }
+            h3 { font-size: 3rem; }
+            .timeline-h { padding: 0 20px; }
         }
 
-        @media (max-width: 1152.0px) {
-            .slide { padding: 48.0px; }
-            .slide-title { font-size: 4.3rem; letter-spacing: -2.4px; }
-            .slide-subtitle { font-size: 2.4rem; }
-            .section-title { font-size: 3.1rem; }
-            .grid-2 { grid-template-columns: 1fr; }
-            .timeline { flex-direction: column; gap: 48.0px; }
-            .timeline::before { display: none; }
+        @media (max-width: 768px) {
+            .slide { padding: 40px 20px; }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.8rem; }
+            h3 { font-size: 2.2rem; }
+            p { font-size: 1.3rem; }
+            .subtitle { font-size: 1.8rem; }
+            .icon { font-size: 6rem; margin-bottom: 30px; }
+            .quote { font-size: 1.6rem; padding: 30px; }
+            .quote::before { font-size: 5rem; top: 10px; left: 15px; }
+            .quote-author { font-size: 1.2rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 30px; }
+            .card { padding: 35px; }
+            .card-icon { font-size: 3rem; }
+            .card h4 { font-size: 1.6rem; }
+            .card p { font-size: 1.1rem; }
+            .big-number { font-size: 5rem; }
+            .timeline-h { flex-direction: column; gap: 40px; padding: 0; }
+            .timeline-h::before { display: none; }
+            .timeline-h-icon { width: 80px; height: 80px; font-size: 2.5rem; }
+            .timeline-h-item h4 { font-size: 1.4rem; }
+            .timeline-h-item p { font-size: 1rem; }
+            .nav-hint { font-size: 0.8rem; bottom: 70px; }
         }
 
-        @media (max-width: 720.0px) {
-            .slide { padding: 36.0px; }
-            .slide-title { font-size: 3.6rem; }
-            .section-title { font-size: 2.6rem; }
-            .highlight-number { font-size: 4.8rem; }
+        @media (max-width: 480px) {
+            .slide { padding: 30px 15px; }
+            h1 { font-size: 2.5rem; letter-spacing: -1px; }
+            h2 { font-size: 2rem; letter-spacing: -1px; }
+            h3 { font-size: 1.8rem; }
+            p { font-size: 1.1rem; }
+            .subtitle { font-size: 1.4rem; }
+            .icon { font-size: 5rem; }
+            .quote { font-size: 1.3rem; padding: 25px; }
+            .card { padding: 25px; }
+            .card-icon { font-size: 2.5rem; }
+            .card h4 { font-size: 1.4rem; }
+            .card p { font-size: 1rem; }
+            .dot { width: 6px; height: 6px; }
+            .dot.active { width: 18px; }
+        }
+
+        /* Animations */
+        .slide.active .slide-content > * {
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
-
-
-
-
 </head>
 <body>
     <!-- Slide 1: Título -->
@@ -293,7 +372,7 @@
             <h2>A Chegada</h2>
             <p><span class="highlight">André Calabró</span> assume a liderança da área de cobrança do Banco Pan</p>
             <div class="icon" style="margin-top: 60px;">🚶</div>
-            <p style="1.4rem; color: #FFFFFF;">Um setor esquecido, com processos ultrapassados e baixo investimento</p>
+            <p style="font-size: 2.2rem; color: #FFFFFF;">Um setor esquecido, com processos ultrapassados e baixo investimento</p>
         </div>
     </div>
 
@@ -513,7 +592,7 @@
             <h2>A Saída</h2>
             <p>Antes de concretizar essa visão, <span class="highlight">André Calabró deixa o Banco Pan</span></p>
             <div class="icon" style="margin-top: 60px;">👋</div>
-            <p style="margin-top: 60px; 1.4rem; color: #FFFFFF;">A transformação estava em andamento, mas incompleta</p>
+            <p style="margin-top: 60px; font-size: 2.2rem; color: #FFFFFF;">A transformação estava em andamento, mas incompleta</p>
         </div>
     </div>
 
@@ -553,8 +632,8 @@
             <div class="icon">✨</div>
             <h2>A História Continua</h2>
             <p><span class="highlight">Luciano</span> permanece no banco e assume a continuidade da transformação</p>
-            <p style="margin-top: 40px; 1.4rem; color: #FFFFFF;">O que acontecerá a seguir?</p>
-            <p style="margin-top: 60px; 1.2rem; color: #98989D;">Parte 2: A Busca pela Solução</p>
+            <p style="margin-top: 40px; font-size: 2.2rem; color: #FFFFFF;">O que acontecerá a seguir?</p>
+            <p style="margin-top: 60px; font-size: 1.8rem; color: #98989D;">Parte 2: A Busca pela Solução</p>
         </div>
     </div>
 
@@ -562,33 +641,7 @@
     <div class="slide-indicator"></div>
     <div class="nav-hint">Clique ou use as setas para navegar</div>
 
-    
-    <!-- Slide Final: Escolha a Próxima Parte -->
-    <div class="slide" data-slide="14">
-        <div class="slide-content">
-            <h2 style="margin-bottom: 40px;">Qual parte você quer ver agora?</h2>
-            <div class="grid-3" style="max-width: 1000px; margin: 0 auto;">
-                <a href="parte1-historia.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
-                    <div class="card-icon">📖</div>
-                    <h4>Parte 1</h4>
-                    <p>A Jornada de André Calabró</p>
-                </a>
-                <a href="parte2-solucao.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
-                    <div class="card-icon">🔍</div>
-                    <h4>Parte 2</h4>
-                    <p>A Busca pela Solução</p>
-                </a>
-                <a href="parte3-ecossistema.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
-                    <div class="card-icon">🎯</div>
-                    <h4>Parte 3</h4>
-                    <p>O Ecossistema Cobdesk</p>
-                </a>
-            </div>
-            <a href="index.html" style="display: inline-block; margin-top: 60px; color: #98989D; text-decoration: none; 0.8rem;">← Voltar ao Início</a>
-        </div>
-    </div>
-
-<script>
+    <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
