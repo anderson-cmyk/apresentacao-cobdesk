@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parte 1: A História de André Calabró</title>
+    <title>Parte 1: A Jornada de André Calabró</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -225,107 +225,67 @@
             color: #98989D;
         }
 
-        /* Timeline */
-        .timeline-vertical {
-            max-width: 800px;
-            margin: 60px auto;
-            position: relative;
-            padding-left: 100px;
+        /* Big Number */
+        .big-number {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 40px 0;
         }
 
-        .timeline-vertical::before {
+        /* Timeline Horizontal */
+        .timeline-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 80px;
+            position: relative;
+            padding: 0 50px;
+        }
+
+        .timeline-h::before {
             content: '';
             position: absolute;
-            left: 40px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, #007AFF, #5856D6);
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(to right, #007AFF, #5856D6);
+            transform: translateY(-50%);
         }
 
-        .timeline-step {
-            margin-bottom: 80px;
+        .timeline-h-item {
+            flex: 1;
+            text-align: center;
             position: relative;
+            z-index: 2;
         }
 
-        .timeline-step-icon {
-            position: absolute;
-            left: -60px;
-            width: 80px;
-            height: 80px;
+        .timeline-h-icon {
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, #007AFF, #5856D6);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            margin: 0 auto 25px;
             box-shadow: 0 10px 40px rgba(0, 122, 255, 0.4);
         }
 
-        .timeline-step-content {
-            text-align: left;
-        }
-
-        .timeline-step h4 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #007AFF;
-        }
-
-        .timeline-step p {
-            font-size: 1.5rem;
-            line-height: 1.7;
-            color: #98989D;
-            margin: 0;
-        }
-
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 100px;
-            margin-top: 80px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-        }
-
-        .stat-label {
-            font-size: 2rem;
+        .timeline-h-item h4 {
+            font-size: 1.6rem;
             font-weight: 600;
             margin-bottom: 10px;
         }
 
-        .stat-value {
-            font-size: 1.5rem;
+        .timeline-h-item p {
+            font-size: 1.1rem;
             color: #98989D;
-        }
-
-        /* Next Button */
-        .next-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #007AFF, #5856D6);
-            color: white;
-            padding: 20px 50px;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 60px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
-        }
-
-        .next-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 122, 255, 0.4);
         }
 
         /* Responsive */
@@ -336,7 +296,8 @@
             p { font-size: 1.4rem; }
             .quote { font-size: 2rem; padding: 40px; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .timeline-vertical { padding-left: 80px; }
+            .timeline-h { flex-direction: column; gap: 40px; }
+            .timeline-h::before { display: none; }
         }
 
         /* Animations */
@@ -361,8 +322,8 @@
     <div class="slide active" data-slide="0">
         <div class="slide-content">
             <div class="icon">📖</div>
-            <h1 class="gradient-text">A História</h1>
-            <p class="subtitle">A jornada de André Calabró na transformação da cobrança do Banco Pan</p>
+            <h1 class="gradient-text">Parte 1</h1>
+            <p class="subtitle">A Jornada de André Calabró</p>
         </div>
     </div>
 
@@ -370,192 +331,270 @@
     <div class="slide" data-slide="1">
         <div class="slide-content">
             <h2>A Chegada</h2>
-            <p>Ano 2023. <span class="highlight">André Calabró</span> assume a liderança da área de cobrança do Banco Pan.</p>
-            <p>Um setor esquecido. Baixo investimento. Processos ultrapassados. Equipe desmotivada.</p>
+            <p><span class="highlight">André Calabró</span> assume a liderança da área de cobrança do Banco Pan</p>
             <div class="icon" style="margin-top: 60px;">🚶</div>
+            <p style="font-size: 2.2rem; color: #FFFFFF;">Um setor esquecido, com processos ultrapassados e baixo investimento</p>
         </div>
     </div>
 
-    <!-- Slide 3: O Diagnóstico -->
+    <!-- Slide 3: O Cenário Obsoleto -->
     <div class="slide" data-slide="2">
         <div class="slide-content">
-            <h2>O Diagnóstico</h2>
-            <p>André mergulha na operação e descobre um cenário crítico</p>
+            <h2>O Cenário Obsoleto</h2>
+            <p>André encontra uma operação completamente defasada</p>
             <div class="grid-2">
                 <div class="card">
                     <span class="card-icon">⏳</span>
                     <h4>Processos Manuais</h4>
-                    <p>Operações lentas, repetitivas e ineficientes consumindo tempo valioso</p>
+                    <p>Tudo feito à mão, lento e ineficiente</p>
                 </div>
                 <div class="card">
-                    <span class="card-icon">🌀</span>
-                    <h4>Ferramentas Complexas</h4>
-                    <p>Sistemas pesados com múltiplas abas dificultando o trabalho</p>
+                    <span class="card-icon">🗂️</span>
+                    <h4>Sistemas Antigos</h4>
+                    <p>Ferramentas pesadas e desconectadas</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">😫</span>
                     <h4>Equipe Desmotivada</h4>
-                    <p>Alto turnover e baixo engajamento dos operadores</p>
+                    <p>Alto turnover e baixo engajamento</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">📉</span>
                     <h4>Baixa Performance</h4>
-                    <p>Taxas de recuperação abaixo do potencial do mercado</p>
+                    <p>Resultados muito abaixo do potencial</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Slide 4: O Momento de Virada -->
+    <!-- Slide 4: Desenvolvimento de Squads -->
     <div class="slide" data-slide="3">
         <div class="slide-content">
-            <h2>O Momento de Virada</h2>
-            <div class="quote">
-                CHEGA! Não vamos mais remendar o velho. Vamos criar algo completamente novo. Vamos transformar a cobrança de um centro de custo em um centro de excelência.
-                <div class="quote-author">— André Calabró</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: A Decisão -->
-    <div class="slide" data-slide="4">
-        <div class="slide-content">
-            <h2>A Decisão</h2>
-            <p>Em vez de otimizar processos antigos, André decide construir do zero</p>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-label">Visão Clara</div>
-                    <div class="stat-value">Transformação radical</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-label">Pessoas Primeiro</div>
-                    <div class="stat-value">Engajamento e desenvolvimento</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">🚀</div>
-                    <div class="stat-label">Tecnologia</div>
-                    <div class="stat-value">Inovação e inteligência</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 6: Visão Squad -->
-    <div class="slide" data-slide="5">
-        <div class="slide-content">
-            <h2>Visão Squad</h2>
-            <p>André implementa uma nova forma de trabalhar: <span class="highlight">equipes ágeis e autônomas</span></p>
-            <div class="timeline-vertical">
-                <div class="timeline-step">
-                    <div class="timeline-step-icon">👥</div>
-                    <div class="timeline-step-content">
-                        <h4>Formação de Squads</h4>
-                        <p>Equipes multidisciplinares com autonomia para tomar decisões e experimentar soluções</p>
-                    </div>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-step-icon">⚡</div>
-                    <div class="timeline-step-content">
-                        <h4>Metodologia Ágil</h4>
-                        <p>Ciclos rápidos de desenvolvimento, testes e aprendizado contínuo</p>
-                    </div>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-step-icon">🎓</div>
-                    <div class="timeline-step-content">
-                        <h4>Cultura de Aprendizado</h4>
-                        <p>Investimento em capacitação, experimentação e compartilhamento de conhecimento</p>
-                    </div>
-                </div>
-                <div class="timeline-step">
-                    <div class="timeline-step-icon">🏆</div>
-                    <div class="timeline-step-content">
-                        <h4>Reconhecimento</h4>
-                        <p>Sistema de meritocracia e valorização das conquistas individuais e coletivas</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 7: API e Autoatendimento -->
-    <div class="slide" data-slide="6">
-        <div class="slide-content">
-            <h2>API e Autoatendimento</h2>
-            <p>Desenvolvimento de soluções tecnológicas para <span class="highlight">autonomia e eficiência</span></p>
+            <h2>Desenvolvimento de Squads</h2>
+            <p>André implementa <span class="highlight">equipes ágeis e autônomas</span> para evoluir a operação</p>
             <div class="grid-3">
                 <div class="card">
-                    <span class="card-icon">🔌</span>
-                    <h4>APIs Inteligentes</h4>
-                    <p>Integração entre sistemas para fluxo automatizado de dados e processos</p>
-                </div>
-                <div class="card">
-                    <span class="card-icon">📱</span>
-                    <h4>Autoatendimento</h4>
-                    <p>Clientes resolvem questões de forma rápida e autônoma via digital</p>
-                </div>
-                <div class="card">
-                    <span class="card-icon">🤖</span>
-                    <h4>Inteligência Artificial</h4>
-                    <p>IA para análise, predição e recomendações em tempo real</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 8: Os Primeiros Resultados -->
-    <div class="slide" data-slide="7">
-        <div class="slide-content">
-            <h2>Os Primeiros Resultados</h2>
-            <p>A transformação começa a gerar impacto</p>
-            <div class="grid-2">
-                <div class="card">
-                    <span class="card-icon">📈</span>
-                    <h4>Performance em Alta</h4>
-                    <p>Taxas de recuperação começam a subir com processos mais inteligentes</p>
-                </div>
-                <div class="card">
-                    <span class="card-icon">😊</span>
-                    <h4>Equipe Engajada</h4>
-                    <p>Operadores motivados com ferramentas modernas e reconhecimento</p>
+                    <span class="card-icon">👥</span>
+                    <h4>Equipes Multidisciplinares</h4>
+                    <p>Times com autonomia para decisões rápidas</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">⚡</span>
-                    <h4>Agilidade</h4>
-                    <p>Processos mais rápidos e decisões baseadas em dados</p>
+                    <h4>Metodologia Ágil</h4>
+                    <p>Ciclos rápidos de desenvolvimento e testes</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">🎯</span>
-                    <h4>Foco no Cliente</h4>
-                    <p>Experiência melhorada com autoatendimento e transparência</p>
+                    <h4>Foco em Resultados</h4>
+                    <p>Métricas claras e acompanhamento contínuo</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Slide 9: A Necessidade -->
-    <div class="slide" data-slide="8">
+    <!-- Slide 5: Abertura de APIs -->
+    <div class="slide" data-slide="4">
         <div class="slide-content">
-            <h2>A Necessidade</h2>
-            <p>Com squads funcionando e APIs rodando, surge uma nova questão:</p>
-            <div class="quote">
-                Como integrar tudo isso em um único ecossistema? Como dar aos operadores uma visão unificada e ferramentas realmente poderosas?
-                <div class="quote-author">— A pergunta que mudaria tudo</div>
+            <h2>Abertura de APIs</h2>
+            <p>Integração tecnológica para <span class="highlight">conectar sistemas e automatizar fluxos</span></p>
+            <div class="icon" style="margin-top: 60px;">🔌</div>
+            <div class="grid-2" style="margin-top: 60px;">
+                <div class="card">
+                    <span class="card-icon">🔗</span>
+                    <h4>Integração de Sistemas</h4>
+                    <p>APIs conectando diferentes plataformas</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚙️</span>
+                    <h4>Automação de Fluxos</h4>
+                    <p>Dados fluindo automaticamente entre sistemas</p>
+                </div>
             </div>
-            <p style="margin-top: 60px; font-size: 2rem; color: #007AFF;">A resposta viria na próxima fase da jornada...</p>
         </div>
     </div>
 
-    <!-- Slide 10: Continua -->
+    <!-- Slide 6: Visão Tecnológica no Time -->
+    <div class="slide" data-slide="5">
+        <div class="slide-content">
+            <h2>Visão Tecnológica no Time</h2>
+            <p>Capacitação e modernização da equipe</p>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">🎓</span>
+                    <h4>Capacitação</h4>
+                    <p>Treinamentos em novas tecnologias e metodologias</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">💡</span>
+                    <h4>Cultura de Inovação</h4>
+                    <p>Incentivo à experimentação e aprendizado</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🚀</span>
+                    <h4>Mindset Digital</h4>
+                    <p>Transformação da mentalidade da equipe</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Implantação do Autoatendimento -->
+    <div class="slide" data-slide="6">
+        <div class="slide-content">
+            <h2>Implantação do Autoatendimento</h2>
+            <p>Clientes ganham <span class="highlight">autonomia para resolver questões</span> de forma rápida e digital</p>
+            <div class="icon" style="margin-top: 60px;">📱</div>
+            <div class="grid-2" style="margin-top: 60px;">
+                <div class="card">
+                    <span class="card-icon">🤖</span>
+                    <h4>Chatbots Inteligentes</h4>
+                    <p>Atendimento automatizado 24/7</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">✅</span>
+                    <h4>Resolução Rápida</h4>
+                    <p>Clientes resolvem sem falar com operador</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Automação Mínima -->
+    <div class="slide" data-slide="7">
+        <div class="slide-content">
+            <h2>Automação Mínima</h2>
+            <p>Processos básicos automatizados para <span class="highlight">liberar a equipe</span> para atividades estratégicas</p>
+            <div class="timeline-h">
+                <div class="timeline-h-item">
+                    <div class="timeline-h-icon">📥</div>
+                    <h4>Entrada de Dados</h4>
+                    <p>Automática</p>
+                </div>
+                <div class="timeline-h-item">
+                    <div class="timeline-h-icon">🔄</div>
+                    <h4>Roteamento</h4>
+                    <p>Inteligente</p>
+                </div>
+                <div class="timeline-h-item">
+                    <div class="timeline-h-icon">📊</div>
+                    <h4>Relatórios</h4>
+                    <p>Automáticos</p>
+                </div>
+                <div class="timeline-h-item">
+                    <div class="timeline-h-icon">✉️</div>
+                    <h4>Comunicações</h4>
+                    <p>Programadas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Resistência das Áreas -->
+    <div class="slide" data-slide="8">
+        <div class="slide-content">
+            <h2>Resistência das Áreas</h2>
+            <p>A transformação encontra <span class="highlight">obstáculos internos</span></p>
+            <div class="icon" style="margin-top: 60px;">⚠️</div>
+            <div class="grid-2" style="margin-top: 60px;">
+                <div class="card">
+                    <span class="card-icon">🚧</span>
+                    <h4>Conflitos Internos</h4>
+                    <p>Outras áreas resistem às mudanças propostas</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🤝</span>
+                    <h4>Necessidade de Alinhamento</h4>
+                    <p>Desafio de engajar stakeholders</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Quebra da Resistência -->
     <div class="slide" data-slide="9">
+        <div class="slide-content">
+            <h2>Quebra da Resistência</h2>
+            <p>Com <span class="highlight">resultados concretos</span>, a resistência é superada</p>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">📈</span>
+                    <h4>Resultados Tangíveis</h4>
+                    <p>Performance em alta comprova a estratégia</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🏆</span>
+                    <h4>Conquista de Aliados</h4>
+                    <p>Outras áreas começam a apoiar</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">✨</span>
+                    <h4>Continuidade</h4>
+                    <p>Transformação ganha momentum</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: A Visão Não Concretizada -->
+    <div class="slide" data-slide="10">
+        <div class="slide-content">
+            <h2>A Visão Não Concretizada</h2>
+            <p>André tinha um <span class="highlight">terceiro objetivo</span> em mente</p>
+            <div class="quote">
+                Integrar tudo isso e levar para as empresas de cobrança parceiras, criando um ecossistema completo.
+                <div class="quote-author">— A visão que ficou pendente</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: A Saída -->
+    <div class="slide" data-slide="11">
+        <div class="slide-content">
+            <h2>A Saída</h2>
+            <p>Antes de concretizar essa visão, <span class="highlight">André Calabró deixa o Banco Pan</span></p>
+            <div class="icon" style="margin-top: 60px;">👋</div>
+            <p style="margin-top: 60px; font-size: 2.2rem; color: #FFFFFF;">A transformação estava em andamento, mas incompleta</p>
+        </div>
+    </div>
+
+    <!-- Slide 13: O Legado -->
+    <div class="slide" data-slide="12">
+        <div class="slide-content">
+            <h2>O Legado</h2>
+            <p>André deixou uma <span class="highlight">base sólida</span> para a continuação</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">👥</span>
+                    <h4>Squads Funcionando</h4>
+                    <p>Equipes ágeis operando com eficiência</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔌</span>
+                    <h4>APIs Rodando</h4>
+                    <p>Integração tecnológica estabelecida</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📱</span>
+                    <h4>Autoatendimento Ativo</h4>
+                    <p>Clientes com autonomia digital</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚙️</span>
+                    <h4>Automação Básica</h4>
+                    <p>Processos essenciais automatizados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Continua -->
+    <div class="slide" data-slide="13">
         <div class="slide-content">
             <div class="icon">✨</div>
             <h2>A História Continua</h2>
-            <p>Esta foi a Parte 1: A fundação da transformação</p>
-            <p>Na Parte 2, você descobrirá como nasceu o <span class="highlight">Cobdesk</span></p>
-            <a href="#" class="next-button" onclick="alert('Parte 2 em breve!'); return false;">Continuar →</a>
+            <p><span class="highlight">Luciano</span> permanece no banco e assume a missão</p>
+            <p style="margin-top: 40px; font-size: 2.2rem; color: #FFFFFF;">É ele quem vai concretizar a visão e criar o <span class="highlight">Cobdesk</span></p>
+            <p style="margin-top: 60px; font-size: 1.8rem; color: #98989D;">Parte 2: O Nascimento do Cobdesk</p>
         </div>
     </div>
 
