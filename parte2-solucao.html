@@ -759,5 +759,77 @@
         </div>
     </div>
 
+    <!-- Navigation -->
+    <div class="slide-indicator"></div>
+    <div class="nav-hint">Clique ou use as setas para navegar</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const indicator = document.querySelector('.slide-indicator');
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === 0) dot.classList.add('active');
+            indicator.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            // Limitar navegação sem loop
+            if (n < 0) {
+                currentSlide = 0;
+            } else if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('a') && !e.target.closest('.dot')) {
+                nextSlide();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+            });
+        });
+    </script>
+
     </body>
 </html>

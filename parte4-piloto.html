@@ -469,6 +469,9 @@
             slides[index].classList.add('active');
         }
 
+        // Show first slide on load
+        showSlide(0);
+
         function nextSlide() {
             if (currentSlide < totalSlides - 1) {
                 currentSlide++;
