@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro Completo - Cobdesk</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1C1C1E;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .slide-content {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .slide-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slide-number {
+            font-size: 0.85rem;
+            color: #007AFF;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.3;
+        }
+
+        .slide-timing {
+            font-size: 0.75rem;
+            color: #98989D;
+            margin-top: 8px;
+        }
+
+        .script-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .script-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #007AFF;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .script-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #FFFFFF;
+        }
+
+        .script-text em {
+            color: #FFD60A;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .script-text strong {
+            color: #30D158;
+            font-weight: 600;
+        }
+
+        .instruction {
+            background: rgba(255, 149, 0, 0.15);
+            border-left: 3px solid #FF9500;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #FFD60A;
+        }
+
+        .pause {
+            background: rgba(255, 59, 48, 0.15);
+            border-left: 3px solid #FF3B30;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #FF9F0A;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .tip {
+            background: rgba(0, 122, 255, 0.15);
+            border-left: 3px solid #007AFF;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #64D2FF;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #007AFF;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        ul li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #007AFF;
+            font-weight: 600;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .nav-button:active {
+            transform: scale(0.95);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-progress {
+            flex: 1;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #98989D;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #007AFF, #5856D6);
+            transition: width 0.3s ease;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .section-divider {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .section-divider .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .section-divider h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .section-divider p {
+            font-size: 1.1rem;
+            color: #98989D;
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 20px 15px 100px; }
+            .slide-title { font-size: 1.5rem; }
+            .script-text { font-size: 1rem; }
+            .section-divider h2 { font-size: 2rem; }
+            .section-divider .icon { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">✕ Fechar</a>
+
+    <!-- Slide 0: Intro -->
+    <div class="slide active">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">🎬</div>
+                <h2>Roteiro Completo</h2>
+                <p>Guia detalhado para os 49 slides da apresentação</p>
+            </div>
+            <div class="tip">
+                <div class="tip-title">💡 Como usar</div>
+                <ul>
+                    <li>Clique ou use as setas para navançar</li>
+                    <li>Leia os scripts em voz alta para praticar</li>
+                    <li>Observe as instruções de pausa e timing</li>
+                    <li>Use no celular durante a apresentação</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 1: Preparação -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Preparação</div>
+                <div class="slide-title">Antes de Começar</div>
+            </div>
+            <div class="tip">
+                <div class="tip-title">✅ Checklist Técnico</div>
+                <ul>
+                    <li>Acesse o Caleidoscópio</li>
+                    <li>Teste navegação em tela cheia (F11)</li>
+                    <li>Verifique conexão com internet</li>
+                    <li>Tenha link do Cobdesk aberto</li>
+                </ul>
+            </div>
+            <div class="script-section">
+                <div class="script-label">Escolha da Sequência</div>
+                <ul>
+                    <li><strong>1→2→3:</strong> Cronológica (primeira apresentação)</li>
+                    <li><strong>3→1→2:</strong> Solução primeiro (audiência técnica)</li>
+                    <li><strong>2→3→1:</strong> Problema-solução (investidores)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTE 1 -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">📖</div>
+                <h2>Parte 1</h2>
+                <p>A Jornada de André Calabró</p>
+                <div class="slide-timing">⏱️ 14 slides • 12-15 minutos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- P1S1: Título -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 1/14</div>
+                <div class="slide-title">Título</div>
+            </div>
+            <div class="pause">⏸️ PAUSA - Deixe o slide aparecer por 3 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Boa tarde/Bom dia. Hoje vou contar uma história. Uma história de transformação, desafios e inovação. Esta é a história de como o Banco Pan revolucionou sua área de cobrança. E como toda grande história, ela tem um começo, um meio e um fim surpreendente. Vamos começar pela <em>Parte 1: A Jornada de André Calabró</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S2: A Chegada -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 2/14</div>
+                <div class="slide-title">A Chegada</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Em 2023, <strong>André Calabró</strong> assume a liderança da área de cobrança do Banco Pan. E o que ele encontra? Um setor completamente esquecido. Baixo investimento, processos ultrapassados, e uma equipe desmotivada. Era o tipo de área que ninguém queria liderar. Mas André viu algo diferente. Ele viu <em>potencial</em>."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S3: Cenário Obsoleto -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 3/14</div>
+                <div class="slide-title">O Cenário Obsoleto</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas antes de falar do potencial, vamos falar da realidade. André encontrou <em>quatro grandes problemas</em>:"
+                </div>
+            </div>
+            <div class="instruction">👉 Aponte para cada card enquanto fala</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "<strong>Primeiro:</strong> Processos manuais. Tudo feito à mão, lento, ineficiente. <strong>Segundo:</strong> Sistemas antigos. Ferramentas pesadas que mais atrapalhavam do que ajudavam. <strong>Terceiro:</strong> Equipe desmotivada. Alto turnover, baixo engajamento. E <strong>quarto:</strong> Baixa performance. Os resultados estavam muito abaixo do potencial."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "A pergunta era: <em>como transformar isso?</em>"
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S4: Squads -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 4/14</div>
+                <div class="slide-title">Desenvolvimento de Squads</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "A primeira decisão de André foi revolucionária: ele implementou <strong>squads</strong>. Equipes ágeis e autônomas, com poder de decisão. Não era mais um modelo top-down tradicional. Eram times multidisciplinares, trabalhando com metodologia ágil, focados em resultados concretos."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Isso mudou <em>completamente</em> a dinâmica da área."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S5: APIs -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 5/14</div>
+                <div class="slide-title">Abertura de APIs</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas squads sozinhos não bastam. Era preciso tecnologia. André iniciou a <strong>abertura de APIs</strong> para integrar sistemas e automatizar fluxos. Dados que antes ficavam presos em planilhas agora fluíam automaticamente entre plataformas. A operação começava a respirar."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S6: Visão Tecnológica -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 6/14</div>
+                <div class="slide-title">Visão Tecnológica no Time</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E não era só sobre tecnologia. Era sobre <em>pessoas</em>. André investiu pesado em capacitação. Treinamentos em novas tecnologias, cultura de inovação, mindset digital. Ele não estava apenas mudando processos. Ele estava mudando a <strong>mentalidade da equipe</strong>."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "E isso fez <em>toda a diferença</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S7: Autoatendimento -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 7/14</div>
+                <div class="slide-title">Implantação do Autoatendimento</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "O próximo passo foi dar autonomia aos clientes. <strong>Chatbots inteligentes</strong>, atendimento 24/7, resolução rápida sem precisar falar com operador. O cliente ganhava agilidade, e a equipe ganhava tempo para focar em casos mais complexos. <em>Win-win</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S8: Automação -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 8/14</div>
+                <div class="slide-title">Automação Mínima</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E então veio a automação. Entrada de dados automática, roteamento inteligente, relatórios gerados sozinhos, comunicações programadas. A equipe foi liberada das tarefas repetitivas para focar no que realmente importa: <strong>estratégia e relacionamento</strong>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S9: Resistência -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 9/14</div>
+                <div class="slide-title">Resistência das Áreas</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas nem tudo são flores. Como toda transformação, essa encontrou <em>resistência</em>. Outras áreas do banco começaram a questionar. 'Por que mudar o que sempre funcionou?' 'Isso é muito arriscado.' 'Não temos orçamento para isso.' Os conflitos internos eram constantes."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA dramática de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S10: Quebra da Resistência -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 10/14</div>
+                <div class="slide-title">Quebra da Resistência</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas sabe o que quebra resistência? <strong>Resultados</strong>. E os resultados começaram a aparecer. Performance em alta, equipe engajada, processos mais eficientes. Os números não mentiam. E aos poucos, a resistência se transformou em apoio. Outras áreas começaram a querer aprender com a cobrança."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "A transformação ganhou <em>momentum</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S11: Visão Não Concretizada -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 11/14</div>
+                <div class="slide-title">A Visão Não Concretizada</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "André tinha um <strong>terceiro objetivo</strong> em mente. Ele queria integrar tudo isso e levar para as empresas de cobrança parceiras. Criar um ecossistema completo. Mas..."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA dramática de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S12: A Saída -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 12/14</div>
+                <div class="slide-title">A Saída</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Antes de concretizar essa visão, <strong>André Calabró deixa o Banco Pan</strong>. A transformação estava em andamento, mas incompleta. O terceiro pilar do plano ficou pendente."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Mas a história <em>não termina aqui</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S13: O Legado -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 13/14</div>
+                <div class="slide-title">O Legado</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "André deixou uma <strong>base sólida</strong>. Squads funcionando, APIs rodando, autoatendimento ativo, automação básica implementada. O legado estava construído. Mas faltava alguém para continuar."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P1S14: Continua -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 1 • Slide 14/14</div>
+                <div class="slide-title">A História Continua</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E esse alguém era <strong>Luciano</strong>. Ele permanece no banco e assume a continuidade da transformação. Mas o que acontecerá a seguir? Como ele vai lidar com o desafio?"
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Isso nos leva à <em>Parte 2: A Busca pela Solução</em>."
+                </div>
+            </div>
+            <div class="instruction">🔄 Na apresentação, clique em "Parte 2"</div>
+        </div>
+    </div>
+
+    <!-- PARTE 2 -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">🔍</div>
+                <h2>Parte 2</h2>
+                <p>A Busca pela Solução</p>
+                <div class="slide-timing">⏱️ 19 slides • 15-18 minutos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- P2S1: Título -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 1/19</div>
+                <div class="slide-title">Título</div>
+            </div>
+            <div class="pause">⏸️ PAUSA - Deixe o slide aparecer por 3 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "<em>Parte 2: A Busca pela Solução</em>. Esta é a história de Luciano. De como ele tentou, falhou, aprendeu e finalmente encontrou o caminho."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S2: Luciano Assume -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 2/19</div>
+                <div class="slide-title">Luciano Assume</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Com a saída de André, <strong>Luciano</strong> assume a continuidade da transformação. O legado estava construído, mas a pergunta permanecia: como evoluir ainda mais? Como concretizar aquela visão de integrar tudo com as empresas parceiras?"
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S3: Laboratório -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 3/19</div>
+                <div class="slide-title">A Ideia do Laboratório</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Luciano teve uma ideia: criar um <strong>Laboratório de Inovação</strong>. Um ambiente controlado para testar novas soluções. Experimentar sem medo de errar. Iterar rapidamente. Era uma abordagem científica para a inovação."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "E ele colocou em prática."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S4-19: Continuar com todos os slides da Parte 2... -->
+    <!-- Por questão de tamanho, vou adicionar os slides restantes de forma resumida -->
+
+    <!-- P2S4: Laboratório em Ação -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 4/19</div>
+                <div class="slide-title">O Laboratório em Ação</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "O laboratório começou a funcionar. Experimentação de novas abordagens, métricas rigorosas, ajustes contínuos. Era um ambiente de aprendizado constante. E as coisas começaram a evoluir."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S5: Resultados Satisfatórios -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 5/19</div>
+                <div class="slide-title">Resultados Satisfatórios</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E tecnicamente, funcionou. As soluções desenvolvidas mostraram potencial. Os processos evoluíram em qualidade. Havia luz no fim do túnel."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Mas..."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S6: Mas... -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 6/19</div>
+                <div class="slide-title">Mas...</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas dois problemas críticos surgiram. Problemas que ameaçavam todo o projeto."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA dramática de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S7: Custo Elevado -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 7/19</div>
+                <div class="slide-title">Problema 1: Custo Elevado</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Primeiro problema: o custo. Manter o laboratório e escalar as soluções demandava recursos além do orçamento disponível. Era financeiramente inviável. Por mais que as soluções funcionassem, o investimento era proibitivo."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S8: Baixo Engajamento -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 8/19</div>
+                <div class="slide-title">Problema 2: Baixo Engajamento</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E o segundo problema era ainda mais crítico: as empresas parceiras não engajaram. Havia resistência em adotar as novas soluções. Falta de adesão. E sem o engajamento das empresas, o ecossistema não se completava."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S9: Decisão Difícil -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 9/19</div>
+                <div class="slide-title">A Decisão Difícil</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Luciano teve que tomar uma decisão difícil. E ele foi honesto consigo mesmo e com a equipe:"
+                </div>
+            </div>
+            <div class="script-section">
+                <div class="script-text">
+                    "'Não podemos continuar investindo recursos em algo que não está gerando o retorno esperado. Precisamos pausar.'"
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S10: Suspensão -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 10/19</div>
+                <div class="slide-title">Suspensão do Projeto</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "O laboratório foi pausado. Não cancelado. Pausado. Era uma pausa estratégica para repensar a abordagem. Às vezes, dar um passo atrás é necessário para dar dois passos à frente."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S11: Alguns Meses Depois -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 11/19</div>
+                <div class="slide-title">Alguns Meses Depois</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Alguns meses depois, Luciano muda de estratégia. Em vez de desenvolver internamente e tentar convencer as empresas a adotar, ele inverte a lógica: foca em <strong>capacitar as empresas</strong>."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Se elas estiverem prontas, a solução virá naturalmente."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S12: Pedido de Maturidade -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 12/19</div>
+                <div class="slide-title">Pedido de Maturidade Operacional</div>
+            </div>
+            <div class="instruction">👉 Aponte para os 3 cards horizontais</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Luciano estabelece um processo claro: <strong>Diagnóstico</strong> do nível de maturidade, <strong>Metas claras</strong> de evolução, e <strong>Parceria</strong> - um compromisso mútuo de crescimento. Era uma parceria de verdade. Não era mais o banco impondo. Era uma construção conjunta."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S13: O Tempo Passa -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 13/19</div>
+                <div class="slide-title">O Tempo Passa</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E o tempo passa. As empresas trabalham em sua evolução. Luciano acompanha, apoia, mas não pressiona. E enquanto isso..."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA dramática de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Algo inesperado estava sendo desenvolvido."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S14: Cobcred Apresenta -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 14/19</div>
+                <div class="slide-title">Cobcred Apresenta</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Uma das empresas parceiras, a <strong>Cobcred</strong>, traz uma surpresa. Eles desenvolveram algo. Algo completo. Algo que Luciano nem esperava."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "O <em>Cobhub</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S15: A Revelação -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 15/19</div>
+                <div class="slide-title">A Revelação</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "A Cobcred apresenta o Cobhub. E não é um protótipo. É um <strong>ecossistema integrado</strong> para cobrança inteligente. Visão integrada, custo viável, inteligência artificial aplicada, gamificação. Tudo que Luciano tentou construir no laboratório, mas de uma forma sustentável e escalável."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S16: Luciano Conhece -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 16/19</div>
+                <div class="slide-title">Luciano Conhece o Cobhub</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E quando Luciano vê, ele reconhece imediatamente:"
+                </div>
+            </div>
+            <div class="script-section">
+                <div class="script-text">
+                    "'Isso é exatamente o que precisávamos. A visão que André tinha, mas que não conseguimos concretizar internamente, está aqui.'"
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "A solução não veio de dentro. Veio de uma <em>parceria verdadeira</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S17: O Novo Momento -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 17/19</div>
+                <div class="slide-title">O Novo Momento</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "A parceria entre Banco Pan e Cobcred começa. Soluções fragmentadas e caras dão lugar a um ecossistema integrado e viável. O que era impossível internamente se torna possível através da <strong>colaboração</strong>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S18: O Cobdesk Nasce -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 18/19</div>
+                <div class="slide-title">O Cobdesk Nasce</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "O Cobhub é adaptado, evolui, e se transforma no <strong>Cobdesk</strong>. A plataforma central que integra todas as ferramentas Cobby. O sonho de André, o esforço de Luciano, e a execução da Cobcred se unem em uma solução completa."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P2S19: Continua -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 2 • Slide 19/19</div>
+                <div class="slide-title">A Jornada Continua</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "Mas o que exatamente é o Cobdesk? Quais são essas ferramentas Cobby? Como elas transformam a cobrança?"
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Isso nos leva à <em>Parte 3: O Ecossistema Cobdesk</em>."
+                </div>
+            </div>
+            <div class="instruction">🔄 Na apresentação, clique em "Parte 3"</div>
+        </div>
+    </div>
+
+    <!-- PARTE 3 -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">🎯</div>
+                <h2>Parte 3</h2>
+                <p>O Ecossistema Cobdesk</p>
+                <div class="slide-timing">⏱️ 16 slides • 18-22 minutos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- P3S1: Título -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 1/16</div>
+                <div class="slide-title">Título</div>
+            </div>
+            <div class="pause">⏸️ PAUSA - Deixe o slide aparecer por 3 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "<em>Parte 3: O Ecossistema Cobdesk</em>. Agora vamos mergulhar na solução. Vamos entender o que o Cobdesk realmente faz e como ele transforma cada etapa do processo de cobrança."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S2: O Que Queremos Melhorar -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 2/16</div>
+                <div class="slide-title">O Que Queremos Melhorar</div>
+            </div>
+            <div class="instruction">👉 Aponte para cada card enquanto fala</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "O Cobdesk foi desenhado pensando em quatro stakeholders: Para o <strong>operador</strong>: ferramentas simples, coaching contínuo e gamificação justa. Para o <strong>gestor</strong>: visibilidade 100%, insights acionáveis e orquestração por dado. Para o <strong>cliente</strong>: atendimento humano, rápido e ofertas personalizadas. E para a <strong>empresa</strong>: eficiência, previsibilidade e transformação cultural."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Todos ganham. E isso é feito através de <em>11 ferramentas Cobby</em>. Vamos conhecê-las."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S3: Cobby Profile & Maps -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 3/16</div>
+                <div class="slide-title">Cobby Profile & Cobby Maps</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Primeira ferramenta: <strong>Cobby Profile e Cobby Maps</strong>. No modelo tradicional, a contratação era baseada em CV e dinâmica padrão, com foco genérico. Todo mundo era tratado igual, sem considerar perfis comportamentais."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Com o Cobdesk, temos <em>perfil comportamental</em> que orienta o funil de contratação e a aderência por tipo de operação. Entendemos profundamente cada operador, alinhamos perfis para engajamento ideal e damos à liderança uma visão clara de comportamentos e preferências da equipe. A pessoa certa, no lugar certo, fazendo o que ela faz de melhor."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S4: Streaming -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 4/16</div>
+                <div class="slide-title">Streaming (Salas de Desenvolvimento)</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Segunda ferramenta: <strong>Streaming</strong>. No modelo tradicional, o treinamento era sala de aula mais prova. Estático, chato, desconectado da realidade."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos <em>ambientes colaborativos em tempo real</em> para cocriação, testes e evolução contínua. Integrado às plataformas mais adaptadas da nova geração — como Twitch e Discord — une interação, aprendizado e desenvolvimento ágil. O treinamento virou uma experiência viva."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S5: Ilha dos Primeiros Passos -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 5/16</div>
+                <div class="slide-title">Ilha dos Primeiros Passos</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Terceira ferramenta: <strong>Ilha dos Primeiros Passos</strong>. No onboarding tradicional, era uma semana em célula 'baby' ou direto na operação. Ou você afundava ou aprendia nadando."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos <em>15 dias de imersão mais teste prático</em>, seguidos de 90 dias de salas de sustentação com dicas dos top performers e distribuição de Cobby Coins. O novo operador não é jogado na água. Ele é preparado, acompanhado e recompensado desde o primeiro dia."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S6: Cobby InsightCloud -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 6/16</div>
+                <div class="slide-title">Cobby InsightCloud</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Quarta ferramenta: <strong>Cobby InsightCloud</strong>. No modelo tradicional, a qualidade era reciclagem por amostra e monitoria reativa. Você só descobria o problema depois que ele já tinha acontecido."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos uma plataforma que <em>transforma interações de voz e texto em fluxos inteligentes</em> da jornada do cliente. Ela revela gargalos, treina operadores e guia evolução contínua com insights práticos e acionáveis. A tão sonhada Nuvem de Contexto para sua operação. É a qualidade proativa, não reativa."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S7: Cobby Growth Path -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 7/16</div>
+                <div class="slide-title">Cobby Growth Path</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Quinta ferramenta: <strong>Cobby Growth Path</strong>. No modelo tradicional, o feedback era acompanhamento pós-produção, reativo. O operador só sabia como estava indo no final do mês."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos um <em>app no smartphone com métricas em tempo real e sugestões da IA</em>. O operador sabe exatamente onde está, para onde vai, e o que precisa fazer para chegar lá. É o GPS da carreira dele."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S8: Cobby Bridge -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 8/16</div>
+                <div class="slide-title">Cobby Bridge</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Sexta ferramenta: <strong>Cobby Bridge</strong>. No CRM tradicional, eram muitas abas e caminhos, pesado e confuso. O operador perdia mais tempo navegando no sistema do que falando com o cliente."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos um <em>CRM simplificado e 'skinnable'</em> que integra canais e muda a pele por campanha. O CRM que centraliza toda a jornada do cliente em uma única tela. Finalizações rápidas em poucos cliques. Otimização para WhatsApp e gamificação para engajar a equipe. É a ponte perfeita entre operador e cliente."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S9: Cobby Bubble -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 9/16</div>
+                <div class="slide-title">Cobby Bubble</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Sétima ferramenta: <strong>Cobby Bubble</strong>. No scoring tradicional, eram bureaus tipo prateleira — Lemit, Serasa. Todo mundo usava os mesmos scores genéricos."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos <em>segmentação por 'bolhas' de similaridade</em>, com estratégia e incentivo sob medida por cluster. O algoritmo inteligente de análise do cliente gera Scores de modulação de perfil para otimizar estratégias de cobrança. Cada cliente é único, e o Cobby Bubble entende isso."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S10: Cobby Connect -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 10/16</div>
+                <div class="slide-title">Cobby Connect</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Oitava ferramenta: <strong>Cobby Connect</strong>. Na intranet tradicional, eram informações básicas unidirecionais. Você lia, mas não interagia."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos uma <em>rede social interna</em>: feed, mural, networking e clima conectado à empresa. Plataforma gamificada e moderna para desenvolvimento da equipe, com oficinas de engajamento focadas em Educação Financeira, Evolução Digital e estudos práticos de IA aplicada ao dia a dia. É o LinkedIn interno da sua operação."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S11: Cobby Bank + Store -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 11/16</div>
+                <div class="slide-title">Cobby Bank + Store</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Nona ferramenta: <strong>Cobby Bank e Store</strong>. Nos incentivos tradicionais, eram padrões de RV e performance. Dinheiro no final do mês, se você batesse a meta."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos <em>gamificação diária</em>: Cobby Coins trocados por prêmios de acordo com a experiência. Plataforma de recompensas para operadores e líderes, estimulando performance, reconhecimento e motivação diária. Você não precisa esperar o final do mês para ser reconhecido."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S12: Cobby da Sorte -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 12/16</div>
+                <div class="slide-title">Cobby da Sorte + Rewards Center</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "Décima ferramenta: <strong>Cobby da Sorte e Rewards Center</strong>. Na pós-cobrança tradicional, o foco era apenas na quitação. Cobrou, acabou."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos um <em>programa de recompensas voltado ao cliente</em>: ao pagar o boleto e enviar o comprovante, ele participa de benefícios e sorteios exclusivos. Token/recompensas, sorteios mensais e app de acompanhamento para retenção. O cliente não é punido por ter atrasado. Ele é recompensado por regularizar."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S13: Cobby Open Finance + Maps -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 13/16</div>
+                <div class="slide-title">Cobby Open Finance + Cobby Maps</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Antes</div>
+                <div class="script-text">
+                    "E finalmente, décima primeira ferramenta: <strong>Cobby Open Finance e Cobby Maps</strong>. Na gestão tradicional, o modelo era simplificado, com pouca visão analítica. Você sabia que tinha um problema, mas não sabia exatamente onde."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 2 segundos</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script - Agora</div>
+                <div class="script-text">
+                    "Agora temos <em>dashboards completos</em>: produtividade, PDI/PIP, pipeline de indicadores, mapa de liderança e 'Magic Grip'. E o Open Finance apresenta mensalmente o demonstrativo financeiro da sua operação, garantindo acesso seguro, clareza nos resultados e entendimento da saúde econômica do seu modelo de contrato. Você tem visão 360° da operação e das finanças."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "E essas são as <strong>11 ferramentas Cobby</strong> que compõem o ecossistema Cobdesk."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S14: O Impacto -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 14/16</div>
+                <div class="slide-title">O Impacto</div>
+            </div>
+            <div class="instruction">👉 Aponte para cada estatística</div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E qual é o impacto de tudo isso? Mais de <strong>50% de aumento</strong> no engajamento dos operadores. <strong>100% de visibilidade</strong> das operações. Mais de <strong>40% de aumento</strong> na satisfação do cliente."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "O Cobdesk transforma a cobrança de um centro de custo em um <em>centro de excelência</em>."
+                </div>
+            </div>
+            <div class="instruction">👆 CLIQUE para avançar</div>
+        </div>
+    </div>
+
+    <!-- P3S15: CTA -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Parte 3 • Slide 15/16</div>
+                <div class="slide-title">Veja ao Vivo</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script</div>
+                <div class="script-text">
+                    "E agora, chegou a hora de você ver tudo isso na prática. Vou abrir o Cobdesk ao vivo e mostrar como o ecossistema funciona."
+                </div>
+            </div>
+            <div class="instruction">🖱️ CLIQUE no botão "Acessar o Cobdesk" na apresentação</div>
+            <div class="instruction">💻 Navegue pelo ambiente mostrando as principais funcionalidades</div>
+        </div>
+    </div>
+
+    <!-- P3S16: Encerramento -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Encerramento</div>
+                <div class="slide-title">Fechamento da Apresentação</div>
+            </div>
+            <div class="script-section">
+                <div class="script-label">📢 Script Final</div>
+                <div class="script-text">
+                    "E essa é a história do Cobdesk. Uma história de transformação, perseverança e parceria. <strong>André Calabró</strong> plantou a semente. <strong>Luciano</strong> cultivou e teve a humildade de buscar ajuda. A <strong>Cobcred</strong> trouxe a solução. E juntos, criamos um ecossistema que transforma a cobrança de um problema em uma oportunidade."
+                </div>
+            </div>
+            <div class="pause">⏸️ PAUSA de 3 segundos</div>
+            <div class="script-section">
+                <div class="script-text">
+                    "Agora, estou à disposição para responder perguntas. Quem gostaria de começar?"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide: Dicas Finais -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">💡</div>
+                <h2>Dicas Finais</h2>
+            </div>
+            <div class="tip">
+                <div class="tip-title">🎭 Linguagem Corporal</div>
+                <ul>
+                    <li>Mantenha contato visual com a audiência</li>
+                    <li>Use gestos para enfatizar pontos importantes</li>
+                    <li>Movimente-se pelo espaço</li>
+                    <li>Sorria nos momentos de conquista</li>
+                </ul>
+            </div>
+            <div class="tip">
+                <div class="tip-title">🎵 Ritmo e Tom</div>
+                <ul>
+                    <li>Varie o tom de voz para manter interesse</li>
+                    <li>Use pausas estratégicas para criar suspense</li>
+                    <li>Acelere em momentos de ação</li>
+                    <li>Desacelere em momentos reflexivos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide: Fim -->
+    <div class="slide">
+        <div class="slide-content">
+            <div class="section-divider">
+                <div class="icon">🚀</div>
+                <h2>Boa Apresentação!</h2>
+                <p>Você está pronto para apresentar</p>
+            </div>
+            <div class="tip">
+                <div class="tip-title">✅ Lembre-se</div>
+                <ul>
+                    <li>Respire fundo antes de começar</li>
+                    <li>Seja autêntico e apaixonado</li>
+                    <li>Confie no roteiro, mas seja flexível</li>
+                    <li>Divirta-se! A energia contagia</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <button class="nav-button" id="btn-prev">← Anterior</button>
+        <div class="nav-progress">
+            <span id="current-slide">1</span> / <span id="total-slides">0</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+        <button class="nav-button" id="btn-next">Próximo →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const currentSlideEl = document.getElementById('current-slide');
+        const totalSlidesEl = document.getElementById('total-slides');
+        const progressFill = document.getElementById('progress-fill');
+
+        totalSlidesEl.textContent = totalSlides;
+
+        function goToSlide(n) {
+            if (n < 0 || n >= totalSlides) return;
+            
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            
+            slides[currentSlide].scrollTop = 0;
+            
+            currentSlideEl.textContent = currentSlide + 1;
+            progressFill.style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+            
+            btnPrev.disabled = currentSlide === 0;
+            btnNext.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        btnNext.addEventListener('click', nextSlide);
+        btnPrev.addEventListener('click', prevSlide);
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-bar') && !e.target.closest('.home-button')) {
+                nextSlide();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+
+        goToSlide(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 64px;
+            position: relative;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-content {
+            max-width: 1120px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .slide-title {
+            font-size: 4.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #30D158, #007AFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            letter-spacing: -2.4px;
+        }
+
+        .slide-subtitle {
+            font-size: 2rem;
+            color: #98989D;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            color: #FFFFFF;
+        }
+
+        .highlight-box {
+            background: rgba(48, 209, 88, 0.1);
+            border: 1.6px solid #30D158;
+            border-radius: 20.8px;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .highlight-number {
+            font-size: 4.8rem;
+            font-weight: 900;
+            color: #30D158;
+            margin-bottom: 12.8px;
+        }
+
+        .highlight-text {
+            font-size: 1.6rem;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1.6px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20.8px;
+            padding: 32px;
+            text-align: left;
+        }
+
+        .card-icon {
+            font-size: 3.2rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12.8px;
+            color: #007AFF;
+        }
+
+        .card-text {
+            font-size: 1.28rem;
+            color: #98989D;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 3.2px;
+            background: linear-gradient(90deg, #30D158, #007AFF);
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-dot {
+            width: 80px;
+            height: 80px;
+            background: #30D158;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #000;
+        }
+
+        .timeline-title {
+            font-size: 1.44rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .timeline-desc {
+            font-size: 1.12rem;
+            color: #98989D;
+        }
+
+        .kpi-list {
+            text-align: left;
+            max-width: 720px;
+            margin: 32px auto;
+        }
+
+        .kpi-item {
+            background: rgba(0, 122, 255, 0.1);
+            border-left: 4px solid #007AFF;
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-radius: 8px;
+        }
+
+        .kpi-name {
+            font-size: 1.44rem;
+            font-weight: 700;
+            color: #007AFF;
+            margin-bottom: 8px;
+        }
+
+        .kpi-desc {
+            font-size: 1.12rem;
+            color: #98989D;
+            line-height: 1.5;
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 122, 255, 0.2));
+            border: 1.6px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20.8px;
+            padding: 40px;
+            margin: 32px 0;
+            text-align: left;
+        }
+
+        .objective-primary {
+            font-size: 1.76rem;
+            font-weight: 700;
+            color: #30D158;
+            margin-bottom: 16px;
+        }
+
+        .objective-text {
+            font-size: 1.44rem;
+            color: #FFFFFF;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .objective-secondary {
+            font-size: 1.76rem;
+            font-weight: 700;
+            color: #007AFF;
+            margin: 24px 0 16px;
+        }
+
+        .emphasis {
+            color: #30D158;
+            font-weight: 700;
+        }
+
+        .warning {
+            color: #FF9F0A;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide { padding: 48px; }
+            .slide-title { font-size: 3.84rem; }
+            .section-title { font-size: 2.56rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 32px; }
+            .slide-title { font-size: 2.88rem; letter-spacing: -1.6px; }
+            .slide-subtitle { font-size: 1.6rem; }
+            .section-title { font-size: 2.08rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .timeline { flex-direction: column; gap: 32px; }
+            .timeline::before { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 24px; }
+            .slide-title { font-size: 2.4rem; }
+            .section-title { font-size: 1.76rem; }
+            .highlight-number { font-size: 3.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Título -->
+    <div class="slide active">
+        <div class="slide-content">
+            <h1 class="slide-title">Proposta de Piloto</h1>
+            <p class="slide-subtitle">O próximo passo para a transformação</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Escopo do Piloto -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Escopo do Piloto</h2>
+            <div class="highlight-box">
+                <div class="highlight-number">5%</div>
+                <div class="highlight-text">
+                    Do portfólio de <strong>Leves e Motos do Contact</strong>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Distribuição Atual</h3>
+                    <p class="card-text">95% do volume permanece no modelo atual de distribuição, mantendo todos os processos e assessorias existentes.</p>
+                </div>

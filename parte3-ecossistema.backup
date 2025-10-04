@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parte 3: O Ecossistema Cobdesk</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            51.2px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Navigation */
+        .slide-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            9.6px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #007AFF;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .nav-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #98989D;
+            0.6rem;
+            z-index: 100;
+        }
+
+        /* Typography */
+        h1 {
+            4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            3.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 32px;
+        }
+
+        h3 {
+            2.2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+        }
+
+        p {
+            1.2rem;
+            line-height: 1.6;
+            color: #98989D;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .subtitle {
+            1.6rem;
+            color: #98989D;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: #007AFF;
+            font-weight: 600;
+        }
+
+        /* Icon */
+        .icon {
+            6.4rem;
+            margin-bottom: 32px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Comparison Layout */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            48.0px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .comparison-side {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            38.4px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .comparison-side.before {
+            border: 2px solid #FF3B30;
+        }
+
+        .comparison-side.after {
+            border: 2px solid #34C759;
+        }
+
+        .comparison-label {
+            0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .comparison-icon {
+            3.2rem;
+            margin-bottom: 24px;
+        }
+
+        .comparison-text {
+            1.0rem;
+            line-height: 1.6;
+            color: #FFFFFF;
+        }
+
+        .comparison-arrow {
+            2.6rem;
+            color: #007AFF;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            48.0px;
+            margin-top: 60px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            32.0px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            32.0px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .card-icon {
+            2.6rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h4 {
+            1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            0.8rem;
+            line-height: 1.6;
+            color: #98989D;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            80.0px;
+            margin-top: 80px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .stat-label {
+            1.2rem;
+            color: #98989D;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            17.6px 70px;
+            border-radius: 50px;
+            1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 60px;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 122, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 70px rgba(0, 122, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide { 38.4px 40px; }
+            h1 { 3.2rem; }
+            h2 { 2.6rem; }
+            h3 { 1.9rem; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { 25.6px 20px; }
+            h1 { 2.2rem; }
+            h2 { 1.8rem; }
+            h3 { 1.4rem; }
+            p { 0.8rem; }
+            .subtitle { 1.2rem; }
+            .icon { 3.8rem; margin-bottom: 24px; }
+            .comparison { grid-template-columns: 1fr; 24.0px; }
+            .comparison-arrow { transform: rotate(90deg); }
+            .comparison-side { 25.6px; min-height: auto; }
+            .comparison-icon { 2.2rem; margin-bottom: 16px; }
+            .comparison-text { 0.8rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; 24.0px; }
+            .card { 22.4px; }
+            .card-icon { 1.9rem; }
+            .card h4 { 1.0rem; }
+            .card p { 0.7rem; }
+            .stats { flex-direction: column; 40.0px; }
+            .stat-number { 3.2rem; }
+            .stat-label { 0.9rem; }
+            .nav-hint { 0.5rem; bottom: 70px; }
+            .cta-button { 13.6px 50px; 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { 19.2px 15px; }
+            h1 { 1.6rem; letter-spacing: -1px; }
+            h2 { 1.3rem; letter-spacing: -1px; }
+            h3 { 1.2rem; }
+            p { 0.7rem; }
+            .subtitle { 0.9rem; }
+            .icon { 3.2rem; }
+            .comparison-side { 19.2px; }
+            .comparison-icon { 1.9rem; }
+            .comparison-text { 0.7rem; }
+            .card { 16.0px; }
+            .card-icon { 1.6rem; }
+            .card h4 { 0.9rem; }
+            .card p { 0.6rem; }
+            .stat-number { 2.6rem; }
+            .stat-label { 0.8rem; }
+            .dot { width: 6px; height: 6px; }
+            .dot.active { width: 18px; }
+            .cta-button { 11.2px 40px; 0.8rem; }
+        }
+
+        /* Animations */
+        .slide.active .slide-content > * {
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Título -->
+    <div class="slide active" data-slide="0">
+        <div class="slide-content">
+            <div class="icon">🎯</div>
+            <h1 class="gradient-text">Parte 3</h1>
+            <p class="subtitle">O Ecossistema Cobdesk</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: O Que Queremos Melhorar -->
+    <div class="slide" data-slide="1">
+        <div class="slide-content">
+            <h2>O Que Queremos Melhorar</h2>
+            <p>O Cobdesk transforma <span class="highlight">cada etapa</span> do processo de cobrança</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">👥</span>
+                    <h4>Para o Operador</h4>
+                    <p>Ferramentas simples, coaching contínuo e gamificação justa</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h4>Para o Gestor</h4>
+                    <p>Visibilidade 100%, insights acionáveis e orquestração por dado</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">😊</span>
+                    <h4>Para o Cliente</h4>
+                    <p>Atendimento humano, rápido e ofertas personalizadas</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🏢</span>
+                    <h4>Para a Empresa</h4>
+                    <p>Eficiência, previsibilidade e transformação cultural</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Cobby Profile & Maps -->
+    <div class="slide" data-slide="2">
+        <div class="slide-content">
+            <h3>Cobby Profile & Cobby Maps</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">👤❓</div>
+                    <div class="comparison-text">CV + dinâmica padrão, foco genérico</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🎯</div>
+                    <div class="comparison-text">Perfil comportamental orienta funil e aderência por tipo de operação</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Streaming -->
+    <div class="slide" data-slide="3">
+        <div class="slide-content">
+            <h3>Streaming (Salas de Desenvolvimento)</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">😴</div>
+                    <div class="comparison-text">Sala de aula + prova</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">📺</div>
+                    <div class="comparison-text">Ambientes colaborativos em tempo real integrados a Twitch e Discord</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Ilha dos Primeiros Passos -->
+    <div class="slide" data-slide="4">
+        <div class="slide-content">
+            <h3>Ilha dos Primeiros Passos</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">⏱️</div>
+                    <div class="comparison-text">1 semana em célula "baby" ou direto na operação</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🏝️</div>
+                    <div class="comparison-text">15 dias de imersão + teste prático; 90 dias de sustentação com Cobby Coins</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Cobby InsightCloud -->
+    <div class="slide" data-slide="5">
+        <div class="slide-content">
+            <h3>Cobby InsightCloud</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">🔍</div>
+                    <div class="comparison-text">Reciclagem por amostra e monitoria</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">☁️</div>
+                    <div class="comparison-text">Análise de áudio e texto, comparação com top performers e recomendações neuro-linguísticas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Cobby Growth Path -->
+    <div class="slide" data-slide="6">
+        <div class="slide-content">
+            <h3>Cobby Growth Path (Dashboard)</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">📝</div>
+                    <div class="comparison-text">Acompanhamento pós-produção, reativo</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">📈</div>
+                    <div class="comparison-text">App no smartphone com métricas em tempo real e sugestões da IA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Cobby Bridge -->
+    <div class="slide" data-slide="7">
+        <div class="slide-content">
+            <h3>Cobby Bridge</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">🌀</div>
+                    <div class="comparison-text">Muitas abas e caminhos; pesado</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🌉</div>
+                    <div class="comparison-text">CRM simplificado e "skinnable", integra canais e muda a pele por campanha</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Cobby Bubble -->
+    <div class="slide" data-slide="8">
+        <div class="slide-content">
+            <h3>Cobby Bubble (MCP + Brian)</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">🧊</div>
+                    <div class="comparison-text">Bureaus (prateleira) — Lemit/Serasa</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🫧</div>
+                    <div class="comparison-text">Segmentação por "bolhas" de similaridade, estratégia e incentivo sob medida por cluster</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Cobby Connect -->
+    <div class="slide" data-slide="9">
+        <div class="slide-content">
+            <h3>Cobby Connect</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">📄</div>
+                    <div class="comparison-text">Informações básicas unidirecionais</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🔗</div>
+                    <div class="comparison-text">Rede social interna: feed, mural, networking e clima conectado à empresa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Cobby Bank + Store -->
+    <div class="slide" data-slide="10">
+        <div class="slide-content">
+            <h3>Cobby Bank + Store</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">💵</div>
+                    <div class="comparison-text">Padrões de RV e performance</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🏦</div>
+                    <div class="comparison-text">Gamificação diária: Cobby Coins trocados por prêmios de acordo com a experiência</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Cobby da Sorte -->
+    <div class="slide" data-slide="11">
+        <div class="slide-content">
+            <h3>Cobby da Sorte (Rewards Cliente)</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">✅</div>
+                    <div class="comparison-text">Foco apenas na quitação</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🎁</div>
+                    <div class="comparison-text">Programa de recompensas: ao pagar o boleto e enviar comprovante, participa de sorteios exclusivos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Cobby Open Finance -->
+    <div class="slide" data-slide="12">
+        <div class="slide-content">
+            <h3>Cobby Open Finance</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">📊</div>
+                    <div class="comparison-text">Modelo simplificado, pouca visão analítica</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">💼</div>
+                    <div class="comparison-text">Plataforma que apresenta mensalmente o demonstrativo financeiro da operação, garantindo transparência</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Cobby Maps -->
+    <div class="slide" data-slide="13">
+        <div class="slide-content">
+            <h3>Cobby Maps</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Tradicional</div>
+                    <div class="comparison-icon">📉</div>
+                    <div class="comparison-text">Modelo simplificado, pouca visão analítica</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Cobdesk</div>
+                    <div class="comparison-icon">🗺️</div>
+                    <div class="comparison-text">Dashboards: produtividade, PDI/PIP, pipeline de indicadores, mapa de liderança e "Magic Grip"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: O Impacto -->
+    <div class="slide" data-slide="14">
+        <div class="slide-content">
+            <h2>O Impacto</h2>
+            <p>O Cobdesk transforma a cobrança em um <span class="highlight">centro de excelência</span></p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">+50%</div>
+                    <div class="stat-label">Engajamento dos Operadores</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Visibilidade das Operações</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">+40%</div>
+                    <div class="stat-label">Satisfação do Cliente</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 16: CTA Final -->
+    <div class="slide" data-slide="15">
+        <div class="slide-content">
+            <div class="icon">🚀</div>
+            <h2>Experimente o Cobdesk</h2>
+            <p>Veja na prática como o ecossistema funciona</p>
+            <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="cta-button">Acessar o Cobdesk</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-indicator"></div>
+    <div class="nav-hint">Clique ou use as setas para navegar</div>
+
+    
+    <!-- Slide Final: Escolha a Próxima Parte -->
+    <div class="slide" data-slide="16">
+        <div class="slide-content">
+            <h2 style="margin-bottom: 40px;">Qual parte você quer ver agora?</h2>
+            <div class="grid-3" style="max-width: 1000px; margin: 0 auto;">
+                <a href="parte1-historia.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
+                    <div class="card-icon">📖</div>
+                    <h4>Parte 1</h4>
+                    <p>A Jornada de André Calabró</p>
+                </a>
+                <a href="parte2-solucao.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
+                    <div class="card-icon">🔍</div>
+                    <h4>Parte 2</h4>
+                    <p>A Busca pela Solução</p>
+                </a>
+                <a href="parte3-ecossistema.html" class="card" style="text-decoration: none; cursor: pointer; transition: transform 0.3s ease;">
+                    <div class="card-icon">🎯</div>
+                    <h4>Parte 3</h4>
+                    <p>O Ecossistema Cobdesk</p>
+                </a>
+            </div>
+            <a href="index.html" style="display: inline-block; margin-top: 60px; color: #98989D; text-decoration: none; 0.8rem;">← Voltar ao Início</a>
+        </div>
+    </div>
+
+<script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const indicator = document.querySelector('.slide-indicator');
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === 0) dot.classList.add('active');
+            indicator.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('a') && !e.target.closest('.dot')) {
+                nextSlide();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+            });
+        });
+    </script>
+</body>
+</html>

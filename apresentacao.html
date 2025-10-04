@@ -249,12 +249,40 @@
             }
         });
 
-        // Listen for messages from iframes (when they reach the end)
+        // Track completed parts
+        const completedParts = new Set();
+        const totalSlides = {
+            1: 14,
+            2: 18,
+            3: 16,
+            4: 9
+        };
+
+        // Listen for messages from iframes
         window.addEventListener('message', (event) => {
             if (event.data === 'slideshow-ended') {
                 nextPart();
+            } else if (event.data && event.data.type === 'slide-changed') {
+                const partNumber = event.data.part;
+                const currentSlide = event.data.slide;
+                const total = totalSlides[partNumber];
+                
+                // If reached the last slide, mark part as completed
+                if (currentSlide >= total - 1) {
+                    completedParts.add(partNumber);
+                    markPartAsCompleted(partNumber);
+                }
             }
         });
+
+        function markPartAsCompleted(partNumber) {
+            const button = buttons[partNumber];
+            if (button && !button.classList.contains('completed')) {
+                button.classList.add('completed');
+                button.style.background = '#007AFF';
+                button.style.borderColor = '#007AFF';
+            }
+        }
 
         // Show first part in the order
         showPart(partOrder[0]);
