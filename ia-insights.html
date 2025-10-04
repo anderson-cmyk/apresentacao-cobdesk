@@ -497,45 +497,330 @@ Responda sempre priorizando a perspectiva e o conforto do cliente, com dados sob
         async function callBackendAPI(question) {
             const cardData = cardPrompts[selectedCard];
             
-            // Simular delay da API
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Configurar URL da API (ajustar conforme ambiente)
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:5000/api/generate'
+                : 'https://5000-ij1s3ognzyyj9eepk3p6b-29c30d4d.manusvm.computer/api/generate'; // URL do backend em produção
             
-            // Gerar infográfico inline (HTML)
-            const infographicHTML = generateInfographicHTML(
-                cardData.name,
-                question,
-                selectedCard
-            );
-            
-            // Criar blob URL para o infográfico
-            const blob = new Blob([infographicHTML], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            
-            // Create infographic entry
-            const infographic = {
-                id: Date.now(),
-                card: selectedCard,
-                cardName: cardData.name,
-                question: question,
-                url: url,
-                timestamp: new Date().toLocaleString('pt-BR')
-            };
+            try {
+                // Fazer chamada real à API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cardId: selectedCard,
+                        question: question
+                    })
+                });
 
-            // Add to list (FIFO - remove oldest if > 10)
-            infographics.unshift(infographic);
-            if (infographics.length > MAX_INFOGRAPHICS) {
-                const removed = infographics.pop();
-                // Revoke old blob URL to free memory
-                if (removed.url.startsWith('blob:')) {
-                    URL.revokeObjectURL(removed.url);
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
                 }
-            }
 
-            // Update UI
-            renderInfographics();
+                const data = await response.json();
+                
+                // Gerar infográfico com dados reais da API
+                const infographicHTML = generateInfographicHTMLFromAPI(
+                    cardData.name,
+                    question,
+                    selectedCard,
+                    data
+                );
+                
+                // Criar blob URL para o infográfico
+                const blob = new Blob([infographicHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                // Create infographic entry
+                const infographic = {
+                    id: Date.now(),
+                    card: selectedCard,
+                    cardName: cardData.name,
+                    question: question,
+                    url: url,
+                    timestamp: new Date().toLocaleString('pt-BR'),
+                    data: data
+                };
+
+                // Add to list (FIFO - remove oldest if > 10)
+                infographics.unshift(infographic);
+                if (infographics.length > MAX_INFOGRAPHICS) {
+                    const removed = infographics.pop();
+                    // Revoke old blob URL to free memory
+                    if (removed.url.startsWith('blob:')) {
+                        URL.revokeObjectURL(removed.url);
+                    }
+                }
+
+                // Update UI
+                renderInfographics();
+                
+            } catch (error) {
+                console.error('Erro ao chamar API:', error);
+                // Fallback: usar geração estática se API falhar
+                const infographicHTML = generateInfographicHTML(
+                    cardData.name,
+                    question,
+                    selectedCard
+                );
+                
+                const blob = new Blob([infographicHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                const infographic = {
+                    id: Date.now(),
+                    card: selectedCard,
+                    cardName: cardData.name,
+                    question: question,
+                    url: url,
+                    timestamp: new Date().toLocaleString('pt-BR')
+                };
+
+                infographics.unshift(infographic);
+                if (infographics.length > MAX_INFOGRAPHICS) {
+                    const removed = infographics.pop();
+                    if (removed.url.startsWith('blob:')) {
+                        URL.revokeObjectURL(removed.url);
+                    }
+                }
+
+                renderInfographics();
+                throw error; // Re-throw para mostrar erro ao usuário
+            }
         }
 
         function generateInfographicHTML(cardName, question, cardType) {
+        function generateInfographicHTMLFromAPI(cardName, question, cardType, apiData) {
+            const timestamp = new Date().toLocaleString('pt-BR');
+            
+            // Gerar conteúdo baseado nos dados da API
+            let content = '';
+            
+            // Título principal
+            content += `<div class="section-title">${apiData.title || 'Insights Gerados por IA'}</div>`;
+            
+            // Pontos principais
+            if (apiData.points && apiData.points.length > 0) {
+                content += '<ul class="info-list">';
+                apiData.points.forEach(point => {
+                    content += `<li>${point}</li>`;
+                });
+                content += '</ul>';
+            }
+            
+            // Estatísticas
+            if (apiData.stats && apiData.stats.length > 0) {
+                content += '<div class="section-title">Dados e Estatísticas</div>';
+                content += '<ul class="info-list">';
+                apiData.stats.forEach(stat => {
+                    content += `<li>${stat}</li>`;
+                });
+                content += '</ul>';
+            }
+            
+            // Conclusão
+            if (apiData.conclusion) {
+                content += '<div class="section-title">Conclusão</div>';
+                content += `<p class="info-text">${apiData.conclusion}</p>`;
+            }
+            
+            // Pergunta original
+            content += '<div class="section-title">Sua Pergunta</div>';
+            content += `<p class="info-text">${question}</p>`;
+            
+            return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico - ${cardName}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .infographic-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin: 15px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .info-list li {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin: 15px 0;
+            padding: 20px 20px 20px 70px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .info-list li:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .info-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid #f0f0f0;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer .timestamp {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .infographic-container {
+                box-shadow: none;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .infographic-container {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .info-text, .info-list li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic-container">
+        <div class="header">
+            <div class="header-icon">🤖</div>
+            <h1>${cardName}</h1>
+            <div class="ai-badge">✨ Gerado por IA</div>
+        </div>
+
+        <div class="content">
+            ${content}
+        </div>
+
+        <div class="footer">
+            <p>Gerado por IA Insights - Cobdesk</p>
+            <p class="timestamp">${timestamp}</p>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
             const timestamp = new Date().toLocaleString('pt-BR');
             
             // Gerar conteúdo baseado no tipo de card
