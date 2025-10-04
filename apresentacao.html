@@ -260,15 +260,20 @@
 
         // Listen for messages from iframes
         window.addEventListener('message', (event) => {
+            console.log('📨 Message received:', event.data);
+            
             if (event.data === 'slideshow-ended') {
                 nextPart();
-            } else if (event.data && event.data.type === 'slide-changed') {
+            } else if (event.data && typeof event.data === 'object' && event.data.type === 'slide-changed') {
                 const partNumber = event.data.part;
                 const currentSlide = event.data.slide;
                 const total = totalSlides[partNumber];
                 
+                console.log(`📊 Part ${partNumber}: slide ${currentSlide}/${total-1}`);
+                
                 // If reached the last slide, mark part as completed
                 if (currentSlide >= total - 1) {
+                    console.log(`✅ Part ${partNumber} completed!`);
                     completedParts.add(partNumber);
                     markPartAsCompleted(partNumber);
                 }
