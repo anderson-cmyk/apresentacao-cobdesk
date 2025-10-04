@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parte 3: O Ecossistema Cobdesk</title>
-            <style>
+                    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
@@ -27,7 +27,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 64px;
+            padding: 96.0px;
             position: relative;
         }
 
@@ -36,53 +36,53 @@
         }
 
         .slide-content {
-            max-width: 1120px;
+            max-width: 1680.0px;
             width: 100%;
             text-align: center;
         }
 
         .slide-title {
-            font-size: 4.8rem;
+            font-size: 7.2rem;
             font-weight: 900;
             background: linear-gradient(135deg, #30D158, #007AFF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 24px;
-            letter-spacing: -2.4px;
+            margin-bottom: 36.0px;
+            letter-spacing: -3.6px;
         }
 
         .slide-subtitle {
-            font-size: 2rem;
+            font-size: 3.0rem;
             color: #98989D;
-            margin-bottom: 48px;
+            margin-bottom: 72.0px;
             font-weight: 400;
         }
 
         .section-title {
-            font-size: 3.2rem;
+            font-size: 4.8rem;
             font-weight: 800;
-            margin-bottom: 32px;
+            margin-bottom: 48.0px;
             color: #FFFFFF;
         }
 
         .highlight-box {
             background: rgba(48, 209, 88, 0.1);
-            border: 1.6px solid #30D158;
-            border-radius: 20.8px;
-            padding: 32px;
-            margin: 24px 0;
+            border: 2.4px solid #30D158;
+            border-radius: 31.2px;
+            padding: 48.0px;
+            margin: 36.0px 0;
         }
 
         .highlight-number {
-            font-size: 4.8rem;
+            font-size: 7.2rem;
             font-weight: 900;
             color: #30D158;
-            margin-bottom: 12.8px;
+            margin-bottom: 19.2px;
         }
 
         .highlight-text {
-            font-size: 1.6rem;
+            font-size: 2.4rem;
             color: #FFFFFF;
             line-height: 1.6;
         }
@@ -90,41 +90,41 @@
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin: 32px 0;
+            gap: 36.0px;
+            margin: 48.0px 0;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin: 32px 0;
+            gap: 36.0px;
+            margin: 48.0px 0;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            border: 1.6px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20.8px;
-            padding: 32px;
+            backdrop-filter: blur(24.0px);
+            border: 2.4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 31.2px;
+            padding: 48.0px;
             text-align: left;
         }
 
         .card-icon {
-            font-size: 3.2rem;
-            margin-bottom: 16px;
+            font-size: 4.8rem;
+            margin-bottom: 24.0px;
             display: block;
         }
 
         .card-title {
-            font-size: 1.6rem;
+            font-size: 2.4rem;
             font-weight: 700;
-            margin-bottom: 12.8px;
+            margin-bottom: 19.2px;
             color: #007AFF;
         }
 
         .card-text {
-            font-size: 1.28rem;
+            font-size: 1.9rem;
             color: #98989D;
             line-height: 1.6;
         }
@@ -133,17 +133,17 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin: 40px 0;
+            margin: 60.0px 0;
             position: relative;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            top: 40px;
+            top: 60.0px;
             left: 10%;
             right: 10%;
-            height: 3.2px;
+            height: 4.8px;
             background: linear-gradient(90deg, #30D158, #007AFF);
         }
 
@@ -155,86 +155,86 @@
         }
 
         .timeline-dot {
-            width: 80px;
-            height: 80px;
+            width: 120.0px;
+            height: 120.0px;
             background: #30D158;
             border-radius: 50%;
-            margin: 0 auto 16px;
+            margin: 0 auto 24.0px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.4rem;
+            font-size: 3.6rem;
             font-weight: 900;
             color: #000;
         }
 
         .timeline-title {
-            font-size: 1.44rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 12.0px;
             color: #FFFFFF;
         }
 
         .timeline-desc {
-            font-size: 1.12rem;
+            font-size: 1.7rem;
             color: #98989D;
         }
 
         .kpi-list {
             text-align: left;
-            max-width: 720px;
-            margin: 32px auto;
+            max-width: 1080.0px;
+            margin: 48.0px auto;
         }
 
         .kpi-item {
             background: rgba(0, 122, 255, 0.1);
-            border-left: 4px solid #007AFF;
-            padding: 20px 24px;
-            margin: 16px 0;
-            border-radius: 8px;
+            border-left: 6.0px solid #007AFF;
+            padding: 30.0px 36.0px;
+            margin: 24.0px 0;
+            border-radius: 12.0px;
         }
 
         .kpi-name {
-            font-size: 1.44rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #007AFF;
-            margin-bottom: 8px;
+            margin-bottom: 12.0px;
         }
 
         .kpi-desc {
-            font-size: 1.12rem;
+            font-size: 1.7rem;
             color: #98989D;
             line-height: 1.5;
         }
 
         .objective-box {
             background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 122, 255, 0.2));
-            border: 1.6px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20.8px;
-            padding: 40px;
-            margin: 32px 0;
+            border: 2.4px solid rgba(255, 255, 255, 0.2);
+            border-radius: 31.2px;
+            padding: 60.0px;
+            margin: 48.0px 0;
             text-align: left;
         }
 
         .objective-primary {
-            font-size: 1.76rem;
+            font-size: 2.6rem;
             font-weight: 700;
             color: #30D158;
-            margin-bottom: 16px;
+            margin-bottom: 24.0px;
         }
 
         .objective-text {
-            font-size: 1.44rem;
+            font-size: 2.2rem;
             color: #FFFFFF;
             line-height: 1.8;
-            margin-bottom: 16px;
+            margin-bottom: 24.0px;
         }
 
         .objective-secondary {
-            font-size: 1.76rem;
+            font-size: 2.6rem;
             font-weight: 700;
             color: #007AFF;
-            margin: 24px 0 16px;
+            margin: 36.0px 0 24.0px;
         }
 
         .emphasis {
@@ -248,30 +248,32 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .slide { padding: 48px; }
-            .slide-title { font-size: 3.84rem; }
-            .section-title { font-size: 2.56rem; }
+        @media (max-width: 1536.0px) {
+            .slide { padding: 72.0px; }
+            .slide-title { font-size: 5.8rem; }
+            .section-title { font-size: 3.8rem; }
             .grid-3 { grid-template-columns: 1fr; }
         }
 
-        @media (max-width: 768px) {
-            .slide { padding: 32px; }
-            .slide-title { font-size: 2.88rem; letter-spacing: -1.6px; }
-            .slide-subtitle { font-size: 1.6rem; }
-            .section-title { font-size: 2.08rem; }
+        @media (max-width: 1152.0px) {
+            .slide { padding: 48.0px; }
+            .slide-title { font-size: 4.3rem; letter-spacing: -2.4px; }
+            .slide-subtitle { font-size: 2.4rem; }
+            .section-title { font-size: 3.1rem; }
             .grid-2 { grid-template-columns: 1fr; }
-            .timeline { flex-direction: column; gap: 32px; }
+            .timeline { flex-direction: column; gap: 48.0px; }
             .timeline::before { display: none; }
         }
 
-        @media (max-width: 480px) {
-            .slide { padding: 24px; }
-            .slide-title { font-size: 2.4rem; }
-            .section-title { font-size: 1.76rem; }
-            .highlight-number { font-size: 3.2rem; }
+        @media (max-width: 720.0px) {
+            .slide { padding: 36.0px; }
+            .slide-title { font-size: 3.6rem; }
+            .section-title { font-size: 2.6rem; }
+            .highlight-number { font-size: 4.8rem; }
         }
     </style>
+
+
 
 
 </head>
