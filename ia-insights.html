@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Insights - Cobdesk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card.active {
+            border: 3px solid #667eea;
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .input-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .generate-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .selected-card-info {
+            background: #f8f9ff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .selected-card-info p {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .results-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .infographic-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .infographic-item {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .infographic-item:hover {
+            transform: translateX(5px);
+        }
+
+        .infographic-info {
+            flex: 1;
+        }
+
+        .infographic-info h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .infographic-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .infographic-link {
+            padding: 10px 25px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .infographic-link:hover {
+            background: #5568d3;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .presentation-btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .presentation-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .presentation-btn:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .generate-btn {
+                width: 100%;
+            }
+
+            .presentation-btn {
+                font-size: 1rem;
+                padding: 15px 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 IA Insights - Cobdesk</h1>
+            <p>Pergunte à IA sobre comunicação, call center e preferências do cliente</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card" data-card="whatsapp" onclick="selectCard('whatsapp')">
+                <div class="card-icon">💬</div>
+                <h3>WhatsApp: O Canal Ideal</h3>
+                <p>Descubra por que o WhatsApp é o canal mais eficiente para comunicação com clientes no Brasil. Sem consumo de dados, conversacional e não invasivo.</p>
+            </div>
+
+            <div class="card" data-card="callcenter" onclick="selectCard('callcenter')">
+                <div class="card-icon">📞</div>
+                <h3>Desafios de Call Center</h3>
+                <p>Explore os problemas do setor: baixos salários, alta rotatividade, instalações precárias e impacto na qualidade do atendimento.</p>
+            </div>
+
+            <div class="card" data-card="preferencia" onclick="selectCard('preferencia')">
+                <div class="card-icon">👤</div>
+                <h3>Preferência do Cliente</h3>
+                <p>Entenda por que clientes preferem WhatsApp ao telefone: acessibilidade, conforto e comunicação no seu próprio ritmo.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 50px;">
+            <a href="https://anderson-cmyk.github.io/apresentacao-cobdesk/" 
+               class="presentation-btn"
+               target="_blank">
+                🎬 Ver Apresentação Completa
+            </a>
+        </div>
+
+        <div class="input-section">
+            <h2>Faça sua pergunta</h2>
+            <div class="selected-card-info" id="selectedCardInfo" style="display: none;">
+                <p id="selectedCardText">Nenhum card selecionado</p>
+            </div>
+            <div class="input-group">
+                <input type="text" 
+                       class="input-field" 
+                       id="questionInput" 
+                       placeholder="Digite sua pergunta ou contexto..."
+                       onkeypress="handleKeyPress(event)">
+                <button class="generate-btn" onclick="generateInfographic()" id="generateBtn" disabled>
+                    Gerar Infográfico
+                </button>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>📊 Infográficos Gerados</h2>
+            <div id="infographicList" class="infographic-list">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📈</div>
+                    <p>Nenhum infográfico gerado ainda</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Selecione um card e faça uma pergunta para começar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCard = null;
+        let infographics = [];
+        const MAX_INFOGRAPHICS = 10;
+
+        const cardPrompts = {
+            whatsapp: {
+                name: "WhatsApp: O Canal Ideal",
+                systemPrompt: `Você é um especialista em comunicação digital no Brasil. Seu foco é defender o WhatsApp como a única ferramenta de contato saudável, não invasiva e totalmente conversacional. 
+
+Contexto importante:
+- WhatsApp é o app líder em transações e contatos no Brasil
+- Operadoras não cobram consumo de dados para WhatsApp
+- É o canal de maior volume de transação
+- Permite comunicação assíncrona e no ritmo do cliente
+- Não é invasivo como ligações telefônicas
+
+Responda sempre destacando esses pontos e gere insights com dados sobre telecomunicações e a importância do WhatsApp.`
+            },
+            callcenter: {
+                name: "Desafios de Call Center",
+                systemPrompt: `Você é um especialista em gestão de call centers no Brasil. Seu foco é analisar os desafios do setor:
+
+Principais problemas:
+- Baixos salários e precarização do trabalho
+- Alta rotatividade de funcionários
+- Instalações sucateadas e infraestrutura deficiente
+- Baixa qualidade nos serviços prestados
+- Impacto na experiência do cliente
+
+Responda sempre com dados concretos, análises críticas e sugestões de melhoria baseadas em tecnologia e humanização do atendimento.`
+            },
+            preferencia: {
+                name: "Preferência do Cliente",
+                systemPrompt: `Você é um especialista em experiência do cliente e comportamento do consumidor. Seu foco é explicar por que clientes não aguentam mais ser contactados por telefone:
+
+Pontos principais:
+- Telefone é um meio de difícil acesso (nem sempre disponível)
+- Ligações são invasivas e interrompem atividades
+- WhatsApp oferece conforto e controle ao cliente
+- Comunicação assíncrona permite responder no melhor momento
+- Cliente prefere ter registro escrito das conversas
+
+Responda sempre priorizando a perspectiva e o conforto do cliente, com dados sobre preferências de comunicação.`
+            }
+        };
+
+        function selectCard(cardType) {
+            // Remove active class from all cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Add active class to selected card
+            document.querySelector(`[data-card="${cardType}"]`).classList.add('active');
+
+            selectedCard = cardType;
+
+            // Update selected card info
+            const infoDiv = document.getElementById('selectedCardInfo');
+            const textP = document.getElementById('selectedCardText');
+            textP.textContent = `Card selecionado: ${cardPrompts[cardType].name}`;
+            infoDiv.style.display = 'block';
+
+            // Enable generate button
+            document.getElementById('generateBtn').disabled = false;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && selectedCard) {
+                generateInfographic();
+            }
+        }
+
+        async function generateInfographic() {
+            if (!selectedCard) {
+                alert('Por favor, selecione um card primeiro!');
+                return;
+            }
+
+            const question = document.getElementById('questionInput').value.trim();
+            if (!question) {
+                alert('Por favor, digite uma pergunta!');
+                return;
+            }
+
+            // Show loading
+            const listDiv = document.getElementById('infographicList');
+            listDiv.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Gerando infográfico com IA...</p>
+                </div>
+            `;
+
+            // Disable button
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.textContent = 'Gerando...';
+
+            try {
+                // Call backend API to generate infographic
+                await callBackendAPI(question);
+
+                // Clear input
+                document.getElementById('questionInput').value = '';
+
+                // Re-enable button
+                btn.disabled = false;
+                btn.textContent = 'Gerar Infográfico';
+
+            } catch (error) {
+                console.error('Erro ao gerar infográfico:', error);
+                alert('Erro ao gerar infográfico. Tente novamente.');
+                btn.disabled = false;
+                btn.textContent = 'Gerar Infográfico';
+            }
+        }
+
+        async function callBackendAPI(question) {
+            const cardData = cardPrompts[selectedCard];
+            
+            // Simular delay da API
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Gerar infográfico inline (HTML)
+            const infographicHTML = generateInfographicHTML(
+                cardData.name,
+                question,
+                selectedCard
+            );
+            
+            // Criar blob URL para o infográfico
+            const blob = new Blob([infographicHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create infographic entry
+            const infographic = {
+                id: Date.now(),
+                card: selectedCard,
+                cardName: cardData.name,
+                question: question,
+                url: url,
+                timestamp: new Date().toLocaleString('pt-BR')
+            };
+
+            // Add to list (FIFO - remove oldest if > 10)
+            infographics.unshift(infographic);
+            if (infographics.length > MAX_INFOGRAPHICS) {
+                const removed = infographics.pop();
+                // Revoke old blob URL to free memory
+                if (removed.url.startsWith('blob:')) {
+                    URL.revokeObjectURL(removed.url);
+                }
+            }
+
+            // Update UI
+            renderInfographics();
+        }
+
+        function generateInfographicHTML(cardName, question, cardType) {
+            const timestamp = new Date().toLocaleString('pt-BR');
+            
+            // Gerar conteúdo baseado no tipo de card
+            let content = '';
+            
+            if (cardType === 'whatsapp') {
+                content = `
+                    <div class="section-title">Por que WhatsApp é o Canal Ideal?</div>
+                    <ul class="info-list">
+                        <li>WhatsApp é o app de mensagens mais usado no Brasil, com mais de 165 milhões de usuários ativos</li>
+                        <li>Operadoras não cobram consumo de dados para WhatsApp, tornando-o acessível para todos</li>
+                        <li>Comunicação assíncrona permite que o cliente responda no seu próprio ritmo</li>
+                        <li>Não é invasivo como ligações telefônicas que interrompem atividades</li>
+                        <li>Registro escrito de todas as conversas para referência futura</li>
+                    </ul>
+                    
+                    <div class="section-title">Dados do Mercado</div>
+                    <p class="info-text">
+                        Segundo pesquisas recentes, 93% dos brasileiros preferem ser contactados via WhatsApp 
+                        do que por telefone. O canal registra taxa de abertura de mensagens de 98%, 
+                        comparado a apenas 20% dos emails.
+                    </p>
+                    
+                    <div class="section-title">Sua Pergunta</div>
+                    <p class="info-text">${question}</p>
+                `;
+            } else if (cardType === 'callcenter') {
+                content = `
+                    <div class="section-title">Principais Desafios do Setor</div>
+                    <ul class="info-list">
+                        <li>Baixos salários: média de R$ 1.500 a R$ 2.000 mensais</li>
+                        <li>Alta rotatividade: turnover médio de 70% ao ano</li>
+                        <li>Instalações precárias: falta de investimento em infraestrutura</li>
+                        <li>Baixa qualidade: impacto direto na experiência do cliente</li>
+                        <li>Pressão por metas: ambiente estressante e desmotivador</li>
+                    </ul>
+                    
+                    <div class="section-title">Impacto nos Resultados</div>
+                    <p class="info-text">
+                        Estudos mostram que call centers com alta rotatividade têm 35% menos produtividade 
+                        e 50% mais reclamações de clientes. O custo de treinamento de novos operadores 
+                        pode chegar a R$ 5.000 por pessoa.
+                    </p>
+                    
+                    <div class="section-title">Sua Pergunta</div>
+                    <p class="info-text">${question}</p>
+                `;
+            } else if (cardType === 'preferencia') {
+                content = `
+                    <div class="section-title">Por que Clientes Preferem WhatsApp</div>
+                    <ul class="info-list">
+                        <li>Telefone é invasivo e interrompe atividades importantes</li>
+                        <li>Difícil acesso: nem sempre é possível atender ligações</li>
+                        <li>WhatsApp permite responder no melhor momento</li>
+                        <li>Conforto de comunicar-se por texto, sem pressão</li>
+                        <li>Histórico de conversas sempre disponível</li>
+                    </ul>
+                    
+                    <div class="section-title">Dados de Preferência</div>
+                    <p class="info-text">
+                        Pesquisas indicam que 87% dos consumidores consideram ligações telefônicas 
+                        "inconvenientes" e 76% preferem resolver problemas via mensagens de texto. 
+                        A satisfação do cliente aumenta 40% quando há opção de atendimento via WhatsApp.
+                    </p>
+                    
+                    <div class="section-title">Sua Pergunta</div>
+                    <p class="info-text">${question}</p>
+                `;
+            }
+            
+            return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico - ${cardName}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .infographic-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .header-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1d1d1f;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1d1d1f;
+            font-weight: 700;
+            margin: 30px 0 20px 0;
+            padding-left: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .info-list li {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            padding: 20px 20px 20px 60px;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #f0f0f0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .info-list li:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .info-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid #f0f0f0;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .footer .timestamp {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .infographic-container {
+                box-shadow: none;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .infographic-container {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .info-text, .info-list li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic-container">
+        <div class="header">
+            <div class="header-icon">📊</div>
+            <h1>${cardName}</h1>
+        </div>
+
+        <div class="content">
+            ${content}
+        </div>
+
+        <div class="footer">
+            <p>Gerado por IA Insights - Cobdesk</p>
+            <p class="timestamp">${timestamp}</p>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
+
+        function renderInfographics() {
+            const listDiv = document.getElementById('infographicList');
+
+            if (infographics.length === 0) {
+                listDiv.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📈</div>
+                        <p>Nenhum infográfico gerado ainda</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Selecione um card e faça uma pergunta para começar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listDiv.innerHTML = infographics.map(info => `
+                <div class="infographic-item">
+                    <div class="infographic-info">
+                        <h4>${info.cardName}</h4>
+                        <p><strong>Pergunta:</strong> ${info.question}</p>
+                        <p style="font-size: 0.8rem; color: #999; margin-top: 5px;">${info.timestamp}</p>
+                    </div>
+                    <a href="${info.url}" target="_blank" class="infographic-link">
+                        Ver Infográfico
+                    </a>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
