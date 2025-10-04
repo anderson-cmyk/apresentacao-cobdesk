@@ -289,15 +289,54 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            h1 { font-size: 4rem; }
-            h2 { font-size: 3.5rem; }
-            h3 { font-size: 2.5rem; }
-            p { font-size: 1.4rem; }
-            .quote { font-size: 2rem; padding: 40px; }
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .timeline-h { flex-direction: column; gap: 40px; }
+        @media (max-width: 1200px) {
+            .slide { padding: 60px 40px; }
+            h1 { font-size: 5rem; }
+            h2 { font-size: 4rem; }
+            h3 { font-size: 3rem; }
+            .timeline-h { padding: 0 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 20px; }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.8rem; }
+            h3 { font-size: 2.2rem; }
+            p { font-size: 1.3rem; }
+            .subtitle { font-size: 1.8rem; }
+            .icon { font-size: 6rem; margin-bottom: 30px; }
+            .quote { font-size: 1.6rem; padding: 30px; }
+            .quote::before { font-size: 5rem; top: 10px; left: 15px; }
+            .quote-author { font-size: 1.2rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 30px; }
+            .card { padding: 35px; }
+            .card-icon { font-size: 3rem; }
+            .card h4 { font-size: 1.6rem; }
+            .card p { font-size: 1.1rem; }
+            .big-number { font-size: 5rem; }
+            .timeline-h { flex-direction: column; gap: 40px; padding: 0; }
             .timeline-h::before { display: none; }
+            .timeline-h-icon { width: 80px; height: 80px; font-size: 2.5rem; }
+            .timeline-h-item h4 { font-size: 1.4rem; }
+            .timeline-h-item p { font-size: 1rem; }
+            .nav-hint { font-size: 0.8rem; bottom: 70px; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 30px 15px; }
+            h1 { font-size: 2.5rem; letter-spacing: -1px; }
+            h2 { font-size: 2rem; letter-spacing: -1px; }
+            h3 { font-size: 1.8rem; }
+            p { font-size: 1.1rem; }
+            .subtitle { font-size: 1.4rem; }
+            .icon { font-size: 5rem; }
+            .quote { font-size: 1.3rem; padding: 25px; }
+            .card { padding: 25px; }
+            .card-icon { font-size: 2.5rem; }
+            .card h4 { font-size: 1.4rem; }
+            .card p { font-size: 1rem; }
+            .dot { width: 6px; height: 6px; }
+            .dot.active { width: 18px; }
         }
 
         /* Animations */
@@ -592,9 +631,9 @@
         <div class="slide-content">
             <div class="icon">✨</div>
             <h2>A História Continua</h2>
-            <p><span class="highlight">Luciano</span> permanece no banco e assume a missão</p>
-            <p style="margin-top: 40px; font-size: 2.2rem; color: #FFFFFF;">É ele quem vai concretizar a visão e criar o <span class="highlight">Cobdesk</span></p>
-            <p style="margin-top: 60px; font-size: 1.8rem; color: #98989D;">Parte 2: O Nascimento do Cobdesk</p>
+            <p><span class="highlight">Luciano</span> permanece no banco e assume a continuidade da transformação</p>
+            <p style="margin-top: 40px; font-size: 2.2rem; color: #FFFFFF;">O que acontecerá a seguir?</p>
+            <p style="margin-top: 60px; font-size: 1.8rem; color: #98989D;">Parte 2: A Busca pela Solução</p>
         </div>
     </div>
 
