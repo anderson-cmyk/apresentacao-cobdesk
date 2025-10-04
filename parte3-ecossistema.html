@@ -701,7 +701,14 @@
             slides[currentSlide].classList.remove('active');
             dots[currentSlide].classList.remove('active');
             
-            currentSlide = (n + totalSlides) % totalSlides;
+            // Limitar navegação sem loop
+            if (n < 0) {
+                currentSlide = 0;
+            } else if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = n;
+            }
             
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
