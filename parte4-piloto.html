@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parte 4 - Proposta de Piloto</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 64px;
+            position: relative;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-content {
+            max-width: 1120px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .slide-title {
+            font-size: 4.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #30D158, #007AFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            letter-spacing: -2.4px;
+        }
+
+        .slide-subtitle {
+            font-size: 2rem;
+            color: #98989D;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            color: #FFFFFF;
+        }
+
+        .highlight-box {
+            background: rgba(48, 209, 88, 0.1);
+            border: 1.6px solid #30D158;
+            border-radius: 20.8px;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .highlight-number {
+            font-size: 4.8rem;
+            font-weight: 900;
+            color: #30D158;
+            margin-bottom: 12.8px;
+        }
+
+        .highlight-text {
+            font-size: 1.6rem;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1.6px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20.8px;
+            padding: 32px;
+            text-align: left;
+        }
+
+        .card-icon {
+            font-size: 3.2rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12.8px;
+            color: #007AFF;
+        }
+
+        .card-text {
+            font-size: 1.28rem;
+            color: #98989D;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 3.2px;
+            background: linear-gradient(90deg, #30D158, #007AFF);
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-dot {
+            width: 80px;
+            height: 80px;
+            background: #30D158;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #000;
+        }
+
+        .timeline-title {
+            font-size: 1.44rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .timeline-desc {
+            font-size: 1.12rem;
+            color: #98989D;
+        }
+
+        .kpi-list {
+            text-align: left;
+            max-width: 720px;
+            margin: 32px auto;
+        }
+
+        .kpi-item {
+            background: rgba(0, 122, 255, 0.1);
+            border-left: 4px solid #007AFF;
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-radius: 8px;
+        }
+
+        .kpi-name {
+            font-size: 1.44rem;
+            font-weight: 700;
+            color: #007AFF;
+            margin-bottom: 8px;
+        }
+
+        .kpi-desc {
+            font-size: 1.12rem;
+            color: #98989D;
+            line-height: 1.5;
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 122, 255, 0.2));
+            border: 1.6px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20.8px;
+            padding: 40px;
+            margin: 32px 0;
+            text-align: left;
+        }
+
+        .objective-primary {
+            font-size: 1.76rem;
+            font-weight: 700;
+            color: #30D158;
+            margin-bottom: 16px;
+        }
+
+        .objective-text {
+            font-size: 1.44rem;
+            color: #FFFFFF;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .objective-secondary {
+            font-size: 1.76rem;
+            font-weight: 700;
+            color: #007AFF;
+            margin: 24px 0 16px;
+        }
+
+        .emphasis {
+            color: #30D158;
+            font-weight: 700;
+        }
+
+        .warning {
+            color: #FF9F0A;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide { padding: 48px; }
+            .slide-title { font-size: 3.84rem; }
+            .section-title { font-size: 2.56rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 32px; }
+            .slide-title { font-size: 2.88rem; letter-spacing: -1.6px; }
+            .slide-subtitle { font-size: 1.6rem; }
+            .section-title { font-size: 2.08rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .timeline { flex-direction: column; gap: 32px; }
+            .timeline::before { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 24px; }
+            .slide-title { font-size: 2.4rem; }
+            .section-title { font-size: 1.76rem; }
+            .highlight-number { font-size: 3.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Título -->
+    <div class="slide active">
+        <div class="slide-content">
+            <h1 class="slide-title">Proposta de Piloto</h1>
+            <p class="slide-subtitle">O próximo passo para a transformação</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Escopo do Piloto -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Escopo do Piloto</h2>
+            <div class="highlight-box">
+                <div class="highlight-number">5%</div>
+                <div class="highlight-text">
+                    Do portfólio de <strong>Leves e Motos do Contact</strong>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Distribuição Atual</h3>
+                    <p class="card-text">95% do volume permanece no modelo atual de distribuição, mantendo todos os processos e assessorias existentes.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔬</span>
+                    <h3 class="card-title">Laboratório</h3>
+                    <p class="card-text">5% dedicado exclusivamente ao piloto Cobdesk, acompanhado fora do ranking tradicional.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: KPIs de Acompanhamento -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">KPIs de Acompanhamento</h2>
+            <p class="slide-subtitle">Métricas para avaliar o sucesso do piloto</p>
+            <div class="kpi-list">
+                <div class="kpi-item">
+                    <div class="kpi-name">Acordo Feito / Base</div>
+                    <div class="kpi-desc">Percentual de acordos realizados em relação à base total de clientes atribuída ao piloto.</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-name">Pagamento do Acordo / Acordo Feito</div>
+                    <div class="kpi-desc">Taxa de conversão de acordos firmados em pagamentos efetivos.</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-name">Pagamento / Base</div>
+                    <div class="kpi-desc">Métrica padrão de efetividade: percentual de pagamentos em relação à base total.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Cronograma -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Cronograma do Piloto</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">25d</div>
+                    <div class="timeline-title">Implantação</div>
+                    <div class="timeline-desc">Recrutamento interno, treinamento e start</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">12s</div>
+                    <div class="timeline-title">Estabilização</div>
+                    <div class="timeline-desc">Ajustes e consolidação do modelo</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">16s</div>
+                    <div class="timeline-title">Maturação</div>
+                    <div class="timeline-desc">Otimização e validação final</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">S29</div>
+                    <div class="timeline-title">Roll Out</div>
+                    <div class="timeline-desc">Planejamento da expansão</div>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 48px;">
+                <div class="highlight-text">
+                    <strong>Sistemas já estão em teste.</strong> A implantação é basicamente operacional: recrutamento, treinamento e ativação.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Metodologia de Acompanhamento -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Metodologia de Acompanhamento</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">📋</span>
+                    <h3 class="card-title">Informações da Assessoria</h3>
+                    <p class="card-text">Relatórios e feedback direto da operação para ajustes táticos e operacionais em tempo real.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🗄️</span>
+                    <h3 class="card-title">Dados Catalogados no Banco</h3>
+                    <p class="card-text">Acompanhamento oficial através de dados estruturados no banco de dados, garantindo <strong>análise sem viés</strong>.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 32px; background: rgba(0, 122, 255, 0.1); border-color: #007AFF;">
+                <div class="highlight-text">
+                    A validação do piloto será baseada em <span class="emphasis">dados objetivos e mensuráveis</span>, eliminando interpretações subjetivas.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Objetivos do Piloto -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Objetivos do Piloto</h2>
+            <div class="objective-box">
+                <div class="objective-primary">🎯 Objetivo Primário</div>
+                <div class="objective-text">
+                    <strong>Manter o mesmo patamar de resultados atual</strong>, mas com <span class="emphasis">muito menos fricção com o cliente</span>. Reduzir volume de ligações e impactos negativos, elevando a qualidade do atendimento e reduzindo reclamações.
+                </div>
+                
+                <div class="objective-secondary">🚀 Objetivo Secundário (Esperado)</div>
+                <div class="objective-text">
+                    Criar um <span class="emphasis">patamar mais agudo de resultados</span> sem o volume de ligações e impactos que existem hoje. Melhorar a imagem do Banco Pan através de uma cobrança em modelo de <strong>jornada digital, inteligente e humanizada</strong>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Modelo de Remuneração -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Modelo de Remuneração</h2>
+            <div class="grid-2">
+                <div class="card" style="border-color: #30D158;">
+                    <span class="card-icon">✅</span>
+                    <h3 class="card-title">Custeio do Piloto</h3>
+                    <p class="card-text">Todo o piloto será custeado pelo <strong>modelo de remuneração atual</strong> dessa faixa de portfólio. Sem custos adicionais para o banco.</p>
+                </div>
+                <div class="card" style="border-color: #FF9F0A;">
+                    <span class="card-icon">⚠️</span>
+                    <h3 class="card-title">Sem PA Fixa</h3>
+                    <p class="card-text">Não haverá estímulo de PA fixa. O modelo será <strong>100% variável com honorários</strong>, alinhado à performance.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 32px;">
+                <div class="highlight-text">
+                    <strong>Risco zero para o banco.</strong> O piloto opera dentro do orçamento existente, com remuneração atrelada a resultados.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Próximos Passos -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Próximos Passos</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">✍️</span>
+                    <h3 class="card-title">1. Aprovação</h3>
+                    <p class="card-text">Aprovação do início do projeto com 5% do portfólio de Leves e Motos do Contact.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🚀</span>
+                    <h3 class="card-title">2. Implantação</h3>
+                    <p class="card-text">25 dias para recrutamento interno, treinamento e start da operação piloto.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">3. Acompanhamento</h3>
+                    <p class="card-text">28 semanas de estabilização e maturação com acompanhamento rigoroso dos KPIs.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 40px; background: linear-gradient(135deg, rgba(48, 209, 88, 0.2), rgba(0, 122, 255, 0.2));">
+                <div class="highlight-text" style="font-size: 1.6rem;">
+                    <strong>Estamos prontos para começar.</strong> Os sistemas estão testados, a metodologia está definida e a equipe está preparada.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Tela de Escolha -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="section-title">Qual parte você quer ver agora?</h2>
+            <div class="grid-3">
+                <a href="parte1-historia.html" class="card" style="text-decoration: none; cursor: pointer;">
+                    <span class="card-icon">📖</span>
+                    <h3 class="card-title">Parte 1</h3>
+                    <p class="card-text">A Jornada de André Calabró</p>
+                </a>
+                <a href="parte2-solucao.html" class="card" style="text-decoration: none; cursor: pointer;">
+                    <span class="card-icon">🔍</span>
+                    <h3 class="card-title">Parte 2</h3>
+                    <p class="card-text">A Busca pela Solução</p>
+                </a>
+                <a href="parte3-ecossistema.html" class="card" style="text-decoration: none; cursor: pointer;">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">Parte 3</h3>
+                    <p class="card-text">O Ecossistema Cobdesk</p>
+                </a>
+            </div>
+            <div style="margin-top: 40px;">
+                <a href="index.html" class="card" style="text-decoration: none; cursor: pointer; display: inline-block; max-width: 400px;">
+                    <span class="card-icon">🏠</span>
+                    <h3 class="card-title">Voltar ao Início</h3>
+                    <p class="card-text">Retornar ao Caleidoscópio</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Click anywhere to advance
+        document.addEventListener('click', (e) => {
+            // Don't advance if clicking on a link
+            if (e.target.tagName === 'A' || e.target.closest('a')) return;
+            nextSlide();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Touch swipe for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+    </script>
+</body>
+</html>
