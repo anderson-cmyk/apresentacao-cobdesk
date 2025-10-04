@@ -672,6 +672,15 @@
             
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
+            
+            // Notify parent window of slide change
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'slide-changed',
+                    part: 1,
+                    slide: currentSlide
+                }, '*');
+            }
         }
 
         function nextSlide() {
