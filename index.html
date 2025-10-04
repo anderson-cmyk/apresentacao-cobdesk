@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cobdesk: A Revolução da Cobrança Inteligente</title>
+    <title>Cobdesk - Apresentação</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -19,60 +19,129 @@
             --success: #34C759;
             --warning: #FF9500;
             --danger: #FF3B30;
-            --bg-primary: #F2F2F7;
-            --bg-secondary: #FFFFFF;
-            --text-primary: #000000;
-            --text-secondary: #8E8E93;
-            --border-radius: 20px;
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+            --bg: #000000;
+            --text: #FFFFFF;
+            --text-secondary: #98989D;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
             -webkit-font-smoothing: antialiased;
+            cursor: default;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 80px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-        }
-
-        @keyframes moveGrid {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .hero-content {
-            text-align: center;
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
             z-index: 1;
-            padding: 40px;
-            max-width: 900px;
         }
 
-        .hero-icon {
-            font-size: 6rem;
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Slide Indicator */
+        .slide-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Navigation Hint */
+        .nav-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            z-index: 100;
+            opacity: 0.7;
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 7rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -3px;
             margin-bottom: 30px;
+        }
+
+        .slide h2 {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+        }
+
+        .slide h3 {
+            font-size: 3rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+        }
+
+        .slide p {
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .slide .subtitle {
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        /* Icon */
+        .icon {
+            font-size: 10rem;
+            margin-bottom: 40px;
+            display: inline-block;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -81,895 +150,628 @@
             50% { transform: translateY(-20px); }
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 40px;
-        }
-
-        /* Section Title */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 15px;
+        /* Gradient Text */
+        .gradient-text {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .section-title p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Problem Section */
-        .problem-section {
-            background: var(--bg-secondary);
-            padding: 80px 0;
-        }
-
-        .problem-grid {
+        /* Grid Layout for Problems/Solutions */
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+            text-align: left;
         }
 
-        .problem-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .problem-card:hover {
+        .card:hover {
+            background: rgba(255, 255, 255, 0.08);
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
         }
 
-        .problem-card-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
             display: block;
         }
 
-        .problem-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .card h4 {
+            font-size: 2rem;
+            font-weight: 600;
             margin-bottom: 15px;
-            color: var(--danger);
         }
 
-        .problem-card p {
+        .card p {
+            font-size: 1.3rem;
+            line-height: 1.6;
             color: var(--text-secondary);
-            line-height: 1.8;
         }
 
-        /* Timeline Section */
-        .timeline-section {
-            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
-            padding: 80px 0;
+        /* Comparison Layout */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
         }
 
+        .comparison-side {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .comparison-side.before {
+            border: 2px solid var(--danger);
+        }
+
+        .comparison-side.after {
+            border: 2px solid var(--success);
+        }
+
+        .comparison-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            opacity: 0.6;
+        }
+
+        .comparison-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+        }
+
+        .comparison-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .comparison-arrow {
+            font-size: 4rem;
+            color: var(--primary);
+        }
+
+        /* Timeline */
         .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
             position: relative;
-            padding: 40px 0;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            transform: translateX(-50%);
+            top: 60px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
         }
 
         .timeline-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 60px;
-            position: relative;
-        }
-
-        .timeline-item:nth-child(odd) {
-            flex-direction: row;
-        }
-
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .timeline-content {
             flex: 1;
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            margin: 0 40px;
+            text-align: center;
             position: relative;
         }
 
         .timeline-icon {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: white;
-            box-shadow: var(--shadow);
-            z-index: 2;
-        }
-
-        .timeline-content h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .timeline-content p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        /* Solution Section */
-        .solution-section {
-            background: var(--bg-secondary);
-            padding: 80px 0;
-        }
-
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .solution-card {
-            background: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .solution-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .solution-card-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px;
-            text-align: center;
-            color: white;
-        }
-
-        .solution-card-header-icon {
             font-size: 3.5rem;
+            margin: 0 auto 30px;
+            box-shadow: 0 20px 60px rgba(0, 122, 255, 0.4);
+        }
+
+        .timeline-item h4 {
+            font-size: 1.8rem;
+            font-weight: 600;
             margin-bottom: 15px;
         }
 
-        .solution-card-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .timeline-item p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
         }
 
-        .solution-card-body {
-            padding: 30px;
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 80px;
         }
 
-        .solution-comparison {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .comparison-before,
-        .comparison-after {
-            padding: 20px;
-            border-radius: 12px;
+        .stat {
             text-align: center;
-        }
-
-        .comparison-before {
-            background: #FFEBEE;
-            border: 2px solid var(--danger);
-        }
-
-        .comparison-after {
-            background: #E8F5E9;
-            border: 2px solid var(--success);
-        }
-
-        .comparison-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            opacity: 0.7;
-        }
-
-        .comparison-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .comparison-text {
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .comparison-arrow {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 80px 0;
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stat-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
         }
 
         .stat-number {
-            font-size: 3.5rem;
+            font-size: 7rem;
             font-weight: 900;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: var(--bg-secondary);
-            padding: 120px 0;
-            text-align: center;
-        }
-
-        .cta-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .cta-icon {
-            font-size: 5rem;
-            margin-bottom: 30px;
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% {
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(0, 122, 255, 0.5));
-            }
-            50% {
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 40px rgba(0, 122, 255, 0.8));
-            }
-        }
-
-        .cta-content h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 20px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1;
+            margin-bottom: 20px;
         }
 
-        .cta-content p {
-            font-size: 1.3rem;
+        .stat-label {
+            font-size: 1.8rem;
             color: var(--text-secondary);
-            margin-bottom: 40px;
-            line-height: 1.8;
         }
 
+        /* CTA Button */
         .cta-button {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 20px 60px;
+            padding: 28px 70px;
             border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            margin-top: 60px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .cta-button:hover::before {
-            width: 400px;
-            height: 400px;
+            box-shadow: 0 20px 60px rgba(0, 122, 255, 0.4);
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 122, 255, 0.4);
-        }
-
-        .cta-button span {
-            position: relative;
-            z-index: 1;
+            box-shadow: 0 25px 70px rgba(0, 122, 255, 0.5);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        @media (max-width: 1024px) {
+            .slide h1 { font-size: 4rem; }
+            .slide h2 { font-size: 3.5rem; }
+            .slide h3 { font-size: 2.5rem; }
+            .slide p { font-size: 1.4rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .comparison-arrow { transform: rotate(90deg); }
+            .timeline { flex-direction: column; gap: 60px; }
+            .timeline::before { display: none; }
+        }
 
-            .hero p {
-                font-size: 1.2rem;
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
             }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                flex-direction: column !important;
-                align-items: flex-start;
-                padding-left: 60px;
-            }
-
-            .timeline-icon {
-                position: absolute;
-                left: 0;
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-
-            .timeline-content {
-                margin: 0;
-                width: 100%;
-            }
-
-            .solution-comparison {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .comparison-arrow {
-                transform: rotate(90deg);
-            }
-
-            .cta-content h2 {
-                font-size: 2rem;
-            }
-
-            .cta-button {
-                padding: 18px 40px;
-                font-size: 1.1rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
+        .slide.active .slide-content > * {
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* Fade In Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        .slide.active .slide-content > *:nth-child(2) {
+            animation-delay: 0.1s;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .slide.active .slide-content > *:nth-child(3) {
+            animation-delay: 0.2s;
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-icon">🎯</div>
-            <h1>Cobdesk</h1>
-            <p>A Revolução da Cobrança Inteligente no Banco Pan</p>
+    <!-- Slide 1: Title -->
+    <div class="slide active" data-slide="0">
+        <div class="slide-content">
+            <div class="icon">🎯</div>
+            <h1 class="gradient-text">Cobdesk</h1>
+            <p class="subtitle">A Revolução da Cobrança Inteligente</p>
         </div>
-        <div class="scroll-indicator">↓</div>
-    </section>
+    </div>
 
-    <!-- Problem Section -->
-    <section class="problem-section">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>O Desafio</h2>
-                <p>O setor de cobrança enfrentava obstáculos críticos que impediam a eficiência e a inovação</p>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card fade-in">
-                    <span class="problem-card-icon">😫</span>
-                    <h3>Processos Manuais</h3>
-                    <p>Operações lentas e repetitivas que consomem tempo e recursos valiosos, gerando frustração nas equipes.</p>
+    <!-- Slide 2: O Desafio -->
+    <div class="slide" data-slide="1">
+        <div class="slide-content">
+            <h2>O Desafio</h2>
+            <p>O setor de cobrança enfrentava obstáculos críticos</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">😫</span>
+                    <h4>Processos Manuais</h4>
+                    <p>Operações lentas e repetitivas gerando frustração</p>
                 </div>
-                <div class="problem-card fade-in">
-                    <span class="problem-card-icon">🌀</span>
-                    <h3>Ferramentas Complexas</h3>
-                    <p>Sistemas pesados com múltiplas abas e caminhos confusos, dificultando o trabalho diário dos operadores.</p>
+                <div class="card">
+                    <span class="card-icon">🌀</span>
+                    <h4>Ferramentas Complexas</h4>
+                    <p>Sistemas pesados com múltiplas abas e caminhos confusos</p>
                 </div>
-                <div class="problem-card fade-in">
-                    <span class="problem-card-icon">📉</span>
-                    <h3>Baixa Performance</h3>
-                    <p>Falta de inteligência e dados acionáveis resultando em baixas taxas de recuperação e moral da equipe.</p>
+                <div class="card">
+                    <span class="card-icon">📉</span>
+                    <h4>Baixa Performance</h4>
+                    <p>Falta de inteligência resultando em baixas taxas de recuperação</p>
                 </div>
-                <div class="problem-card fade-in">
-                    <span class="problem-card-icon">💢</span>
-                    <h3>Experiência do Cliente</h3>
-                    <p>Jornada fragmentada e frustrante, com atendimento lento e falta de transparência nos processos.</p>
+                <div class="card">
+                    <span class="card-icon">💢</span>
+                    <h4>Experiência Ruim</h4>
+                    <p>Jornada fragmentada e frustrante para o cliente</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Timeline Section -->
-    <section class="timeline-section">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>A Jornada da Transformação</h2>
-                <p>Como André Calabró liderou a revolução da cobrança no Banco Pan</p>
-            </div>
+    <!-- Slide 3: A Jornada -->
+    <div class="slide" data-slide="2">
+        <div class="slide-content">
+            <h2>A Jornada da Transformação</h2>
+            <p>Como André Calabró liderou a revolução</p>
             <div class="timeline">
-                <div class="timeline-item fade-in">
+                <div class="timeline-item">
                     <div class="timeline-icon">🚶</div>
-                    <div class="timeline-content">
-                        <h3>O Diagnóstico</h3>
-                        <p>André chegou ao Banco Pan e identificou que o setor de cobrança operava com métodos ultrapassados, baixo investimento em tecnologia e uma equipe desmotivada. Era necessária uma transformação radical.</p>
-                    </div>
+                    <h4>Diagnóstico</h4>
+                    <p>Identificação dos problemas estruturais</p>
                 </div>
-                <div class="timeline-item fade-in">
+                <div class="timeline-item">
                     <div class="timeline-icon">💡</div>
-                    <div class="timeline-content">
-                        <h3>A Visão</h3>
-                        <p>Em vez de apenas otimizar processos existentes, André propôs construir um ecossistema completamente novo: o Cobdesk. Uma plataforma central que integraria inteligência artificial, gamificação e ferramentas modernas.</p>
-                    </div>
+                    <h4>Visão</h4>
+                    <p>Criação do conceito Cobdesk</p>
                 </div>
-                <div class="timeline-item fade-in">
+                <div class="timeline-item">
                     <div class="timeline-icon">⚙️</div>
-                    <div class="timeline-content">
-                        <h3>A Construção</h3>
-                        <p>Formação de squads ágeis, implementação de metodologias modernas e desenvolvimento de 11 ferramentas Cobby especializadas, cada uma resolvendo um problema específico do modelo tradicional.</p>
-                    </div>
+                    <h4>Construção</h4>
+                    <p>Desenvolvimento das 11 ferramentas Cobby</p>
                 </div>
-                <div class="timeline-item fade-in">
+                <div class="timeline-item">
                     <div class="timeline-icon">🚀</div>
-                    <div class="timeline-content">
-                        <h3>O Futuro</h3>
-                        <p>O Cobdesk está pronto para transformar a cobrança de um centro de custo em um centro de excelência, com processos inteligentes, equipes engajadas e clientes satisfeitos.</p>
-                    </div>
+                    <h4>Futuro</h4>
+                    <p>Transformação em centro de excelência</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Solutions Section -->
-    <section class="solution-section">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>O Ecossistema Cobby</h2>
-                <p>11 ferramentas integradas que revolucionam cada etapa do processo de cobrança</p>
-            </div>
-            <div class="solutions-grid">
-                <!-- Solution 1 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🎯</div>
-                        <h3>Cobby Profile & Maps</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">👤❓</div>
-                                <div class="comparison-text">CV + dinâmica padrão, foco genérico</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🎯</div>
-                                <div class="comparison-text">Perfil comportamental orienta funil e aderência por tipo de operação</div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Slide 4: Cobby Profile -->
+    <div class="slide" data-slide="3">
+        <div class="slide-content">
+            <h3>Cobby Profile & Maps</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">👤❓</div>
+                    <div class="comparison-text">CV + dinâmica padrão, foco genérico</div>
                 </div>
-
-                <!-- Solution 2 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">📺</div>
-                        <h3>Streaming</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">😴</div>
-                                <div class="comparison-text">Sala de aula + prova</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">📺</div>
-                                <div class="comparison-text">Ambientes colaborativos em tempo real integrados a Twitch e Discord</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 3 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🏝️</div>
-                        <h3>Ilha dos Primeiros Passos</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">⏱️</div>
-                                <div class="comparison-text">1 semana em célula "baby"</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🏝️</div>
-                                <div class="comparison-text">15 dias de imersão + 90 dias de sustentação com Cobby Coins</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 4 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">☁️</div>
-                        <h3>Cobby InsightCloud</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">🔍</div>
-                                <div class="comparison-text">Reciclagem por amostra e monitoria</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">☁️</div>
-                                <div class="comparison-text">Análise 100% com IA e recomendações neuro-linguísticas</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 5 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">📈</div>
-                        <h3>Cobby Growth Path</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">📝</div>
-                                <div class="comparison-text">Acompanhamento pós-produção, reativo</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">📈</div>
-                                <div class="comparison-text">App com métricas em tempo real e sugestões da IA</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 6 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🌉</div>
-                        <h3>Cobby Bridge</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">🌀</div>
-                                <div class="comparison-text">Muitas abas e caminhos; pesado</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🌉</div>
-                                <div class="comparison-text">CRM simplificado otimizado para WhatsApp com gamificação</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 7 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🫧</div>
-                        <h3>Cobby Bubble</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">🧊</div>
-                                <div class="comparison-text">Bureaus estáticos (Lemit/Serasa)</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🫧</div>
-                                <div class="comparison-text">Segmentação por bolhas de similaridade e estratégia por cluster</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 8 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🔗</div>
-                        <h3>Cobby Connect</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">📄</div>
-                                <div class="comparison-text">Informações básicas unidirecionais</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🔗</div>
-                                <div class="comparison-text">Rede social interna com feed, mural e networking</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 9 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🏦</div>
-                        <h3>Cobby Bank + Store</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">💵</div>
-                                <div class="comparison-text">Padrões de RV e performance</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🏦</div>
-                                <div class="comparison-text">Gamificação diária com Cobby Coins trocados por prêmios</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 10 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🎁</div>
-                        <h3>Cobby da Sorte</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">✅</div>
-                                <div class="comparison-text">Foco apenas na quitação</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🎁</div>
-                                <div class="comparison-text">Recompensas, sorteios e app de retenção</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Solution 11 -->
-                <div class="solution-card fade-in">
-                    <div class="solution-card-header">
-                        <div class="solution-card-header-icon">🗺️</div>
-                        <h3>Cobby Maps</h3>
-                    </div>
-                    <div class="solution-card-body">
-                        <div class="solution-comparison">
-                            <div class="comparison-before">
-                                <div class="comparison-label">Antes</div>
-                                <div class="comparison-icon">📊</div>
-                                <div class="comparison-text">Modelo simplificado, pouca visão analítica</div>
-                            </div>
-                            <div class="comparison-arrow">→</div>
-                            <div class="comparison-after">
-                                <div class="comparison-label">Agora</div>
-                                <div class="comparison-icon">🗺️</div>
-                                <div class="comparison-text">Dashboards completos com PDI/PIP e Magic Grip</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🎯</div>
+                    <div class="comparison-text">Perfil comportamental orienta funil e aderência por tipo de operação</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="section-title" style="color: white;">
-                <h2 style="-webkit-text-fill-color: white;">Valor Gerado</h2>
-                <p style="color: rgba(255, 255, 255, 0.9);">O impacto do Cobdesk em três pilares fundamentais</p>
+    <!-- Slide 5: Streaming -->
+    <div class="slide" data-slide="4">
+        <div class="slide-content">
+            <h3>Streaming</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">😴</div>
+                    <div class="comparison-text">Sala de aula + prova</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">📺</div>
+                    <div class="comparison-text">Ambientes colaborativos em tempo real integrados a Twitch e Discord</div>
+                </div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card fade-in">
-                    <div class="stat-icon">👤</div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Ilha dos Primeiros Passos -->
+    <div class="slide" data-slide="5">
+        <div class="slide-content">
+            <h3>Ilha dos Primeiros Passos</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">⏱️</div>
+                    <div class="comparison-text">1 semana em célula "baby"</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🏝️</div>
+                    <div class="comparison-text">15 dias de imersão + 90 dias de sustentação com Cobby Coins</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: InsightCloud -->
+    <div class="slide" data-slide="6">
+        <div class="slide-content">
+            <h3>Cobby InsightCloud</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">🔍</div>
+                    <div class="comparison-text">Reciclagem por amostra e monitoria</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">☁️</div>
+                    <div class="comparison-text">Análise 100% com IA e recomendações neuro-linguísticas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Growth Path -->
+    <div class="slide" data-slide="7">
+        <div class="slide-content">
+            <h3>Cobby Growth Path</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">📝</div>
+                    <div class="comparison-text">Acompanhamento pós-produção, reativo</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">📈</div>
+                    <div class="comparison-text">App com métricas em tempo real e sugestões da IA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Bridge -->
+    <div class="slide" data-slide="8">
+        <div class="slide-content">
+            <h3>Cobby Bridge</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">🌀</div>
+                    <div class="comparison-text">Muitas abas e caminhos; pesado</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🌉</div>
+                    <div class="comparison-text">CRM simplificado otimizado para WhatsApp com gamificação</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Bubble -->
+    <div class="slide" data-slide="9">
+        <div class="slide-content">
+            <h3>Cobby Bubble</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">🧊</div>
+                    <div class="comparison-text">Bureaus estáticos (Lemit/Serasa)</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🫧</div>
+                    <div class="comparison-text">Segmentação por bolhas de similaridade e estratégia por cluster</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Connect -->
+    <div class="slide" data-slide="10">
+        <div class="slide-content">
+            <h3>Cobby Connect</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">📄</div>
+                    <div class="comparison-text">Informações básicas unidirecionais</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🔗</div>
+                    <div class="comparison-text">Rede social interna com feed, mural e networking</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Bank -->
+    <div class="slide" data-slide="11">
+        <div class="slide-content">
+            <h3>Cobby Bank + Store</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">💵</div>
+                    <div class="comparison-text">Padrões de RV e performance</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🏦</div>
+                    <div class="comparison-text">Gamificação diária com Cobby Coins trocados por prêmios</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Da Sorte -->
+    <div class="slide" data-slide="12">
+        <div class="slide-content">
+            <h3>Cobby da Sorte</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">✅</div>
+                    <div class="comparison-text">Foco apenas na quitação</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🎁</div>
+                    <div class="comparison-text">Recompensas, sorteios e app de retenção</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Maps -->
+    <div class="slide" data-slide="13">
+        <div class="slide-content">
+            <h3>Cobby Maps</h3>
+            <div class="comparison">
+                <div class="comparison-side before">
+                    <div class="comparison-label">Antes</div>
+                    <div class="comparison-icon">📊</div>
+                    <div class="comparison-text">Modelo simplificado, pouca visão analítica</div>
+                </div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-side after">
+                    <div class="comparison-label">Agora</div>
+                    <div class="comparison-icon">🗺️</div>
+                    <div class="comparison-text">Dashboards completos com PDI/PIP e Magic Grip</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: Impacto -->
+    <div class="slide" data-slide="14">
+        <div class="slide-content">
+            <h2>Impacto Gerado</h2>
+            <div class="stats">
+                <div class="stat">
                     <div class="stat-number">+50%</div>
-                    <div class="stat-label">Engajamento dos Operadores</div>
+                    <div class="stat-label">Engajamento</div>
                 </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-icon">📊</div>
+                <div class="stat">
                     <div class="stat-number">100%</div>
-                    <div class="stat-label">Visibilidade das Operações</div>
+                    <div class="stat-label">Visibilidade</div>
                 </div>
-                <div class="stat-card fade-in">
-                    <div class="stat-icon">😊</div>
+                <div class="stat">
                     <div class="stat-number">+40%</div>
-                    <div class="stat-label">Satisfação do Cliente</div>
+                    <div class="stat-label">Satisfação</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content fade-in">
-                <div class="cta-icon">🎯</div>
-                <h2>Sua Jornada Começa Agora</h2>
-                <p>Você conheceu os desafios, acompanhou a transformação e descobriu as soluções. Agora é hora de experimentar o Cobdesk e liderar a revolução da cobrança inteligente.</p>
-                <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="cta-button">
-                    <span>Entrar no Cobdesk</span>
-                </a>
-            </div>
+    <!-- Slide 16: CTA -->
+    <div class="slide" data-slide="15">
+        <div class="slide-content">
+            <div class="icon">🎯</div>
+            <h2>Sua Jornada Começa Agora</h2>
+            <p>Experimente o Cobdesk e lidere a revolução da cobrança inteligente</p>
+            <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="cta-button">Entrar no Cobdesk</a>
         </div>
-    </section>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-indicator"></div>
+    <div class="nav-hint">Clique ou use as setas para navegar</div>
 
     <script>
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const indicator = document.querySelector('.slide-indicator');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === 0) dot.classList.add('active');
+            indicator.appendChild(dot);
+        }
 
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('a')) {
+                nextSlide();
+            }
         });
 
-        // Smooth scroll for scroll indicator
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('.problem-section').scrollIntoView({ behavior: 'smooth' });
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+            });
         });
     </script>
 </body>
