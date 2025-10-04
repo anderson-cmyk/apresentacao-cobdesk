@@ -51,7 +51,7 @@
 
         .parts {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 40px;
             margin-bottom: 60px;
         }
@@ -135,12 +135,16 @@
             .container { padding: 30px 20px; }
             .title { font-size: 3.5rem; letter-spacing: -2px; }
             .subtitle { font-size: 1.4rem; margin-bottom: 50px; }
-            .parts { grid-template-columns: 1fr; gap: 25px; }
+            .parts { grid-template-columns: repeat(2, 1fr); gap: 25px; }
             .part-card { padding: 40px 30px; }
             .part-icon { font-size: 4.5rem; margin: 20px 0; }
             .part-title { font-size: 1.8rem; }
             .part-desc { font-size: 1.1rem; }
             .info { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 600px) {
+            .parts { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
@@ -164,6 +168,7 @@
         .part-card:nth-child(1) { animation-delay: 0.1s; }
         .part-card:nth-child(2) { animation-delay: 0.2s; }
         .part-card:nth-child(3) { animation-delay: 0.3s; }
+        .part-card:nth-child(4) { animation-delay: 0.4s; }
 
         @keyframes fadeInUp {
             from {
@@ -205,6 +210,14 @@
                 <h2 class="part-title">O Ecossistema Cobdesk</h2>
                 <p class="part-desc">As 11 ferramentas Cobby e a transformação completa</p>
                 <div class="part-slides">16 slides</div>
+            </a>
+
+            <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="part-card" style="border-color: #30D158;">
+                <div class="part-number">Acesso Direto</div>
+                <span class="part-icon">🚀</span>
+                <h2 class="part-title">Cobdesk</h2>
+                <p class="part-desc">Experimente o ambiente ao vivo a qualquer momento</p>
+                <div class="part-slides">Demonstração</div>
             </a>
         </div>
 
