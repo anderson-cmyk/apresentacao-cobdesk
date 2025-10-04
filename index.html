@@ -3,760 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>As Crônicas de Cob: A Jornada pela Modernização</title>
+    <title>Cobdesk: A Revolução da Cobrança Inteligente</title>
     <style>
-        /* ===== RESET E CONFIGURAÇÕES GLOBAIS ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #007AFF;
+            --secondary: #5856D6;
+            --success: #34C759;
+            --warning: #FF9500;
+            --danger: #FF3B30;
+            --bg-primary: #F2F2F7;
+            --bg-secondary: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #8E8E93;
+            --border-radius: 20px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            color: #1a1a1a;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
-            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== PARTE 1: O MANGÁ ===== */
-        #manga-section {
-            display: none;
-            background: #ffffff;
-            min-height: 100vh;
-        }
-
-        #manga-section.active {
-            display: block;
-        }
-
-        .manga-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .manga-panel {
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid #1a1a1a;
-            margin-bottom: 40px;
-            background: #ffffff;
-            position: relative;
-            padding: 40px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .manga-panel.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .panel-content {
-            width: 100%;
-            position: relative;
-        }
-
-        /* Painel 1: A Chegada */
-        .manga-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .manga-title h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #1a1a1a;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .manga-title h2 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: #666;
-        }
-
-        .narrator-box {
-            position: absolute;
-            background: #ffffff;
-            border: 2px solid #1a1a1a;
-            padding: 15px 20px;
-            max-width: 350px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .narrator-box.top-left {
-            top: 20px;
-            left: 20px;
-        }
-
-        .narrator-box.bottom-right {
-            bottom: 20px;
-            right: 20px;
-        }
-
-        .narrator-box.bottom {
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
-
-        .hero-silhouette {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 100px;
-        }
-
-        .hero-figure {
-            font-size: 8rem;
-            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
-        }
-
-        .building-background {
-            font-size: 6rem;
-            opacity: 0.3;
-        }
-
-        /* Painel 2: O Diagnóstico */
-        .mini-panels-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .mini-panel {
-            border: 2px solid #1a1a1a;
-            padding: 30px 20px;
-            background: #f9f9f9;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mini-content {
-            text-align: center;
-            position: relative;
-        }
-
-        .character-face {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        .floating-icons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            font-size: 2rem;
-            animation: float 2s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .screen-chaos {
-            font-size: 3rem;
-            margin-top: 15px;
-        }
-
-        .anger-mark {
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            font-size: 2rem;
-            animation: pulse 1s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        .speech-bubble {
-            background: #ffffff;
-            border: 2px solid #1a1a1a;
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 20px;
-            position: relative;
-            font-size: 0.85rem;
-        }
-
-        .speech-bubble::before {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 20px solid #1a1a1a;
-        }
-
-        .chart-down {
-            font-size: 5rem;
-        }
-
-        .onomatopoeia {
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #666;
-            margin-top: 15px;
-        }
-
-        .corridor-scene {
-            border: 2px solid #1a1a1a;
-            padding: 40px;
-            background: linear-gradient(to bottom, #e0e0e0, #cccccc);
-            position: relative;
-            min-height: 300px;
-        }
-
-        .hero-walking {
-            font-size: 4rem;
-            position: absolute;
-            left: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .sad-operators {
-            display: flex;
-            gap: 30px;
-            justify-content: flex-end;
-            font-size: 3rem;
-            margin-top: 20px;
-        }
-
-        .thought-bubble {
-            background: #ffffff;
-            border: 2px dashed #1a1a1a;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 30px;
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-
-        /* Painel 3: O Ponto de Virada */
-        .panel-impact {
-            background: radial-gradient(circle, #ffffff, #f0f0f0);
-        }
-
-        .impact-scene {
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-action {
-            font-size: 8rem;
-            margin-bottom: 30px;
-            animation: slam 0.5s ease-out;
-        }
-
-        @keyframes slam {
-            0% { transform: translateY(-100px) scale(0.5); }
-            50% { transform: translateY(10px) scale(1.1); }
-            100% { transform: translateY(0) scale(1); }
-        }
-
-        .table-slam {
-            font-size: 4rem;
-            opacity: 0.5;
-        }
-
-        .onomatopoeia-large {
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: 10px;
-            color: #1a1a1a;
-            text-shadow: 3px 3px 0 #ffffff, 6px 6px 0 #cccccc;
-            margin: 30px 0;
-            animation: impact-text 0.5s ease-out;
-        }
-
-        @keyframes impact-text {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .impact-lines {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(45deg, transparent 48%, #1a1a1a 48%, #1a1a1a 52%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, #1a1a1a 48%, #1a1a1a 52%, transparent 52%);
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
-        .speech-bubble-explosive {
-            background: #1a1a1a;
-            color: #ffffff;
-            border: 4px solid #ffffff;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 40px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Painel 4: A Visão do Futuro */
-        .vision-scene {
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-presenting {
-            font-size: 5rem;
-            margin-bottom: 30px;
-        }
-
-        .team-silhouettes {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            font-size: 3rem;
-            margin-bottom: 40px;
-            opacity: 0.6;
-        }
-
-        .hologram {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border: 3px solid #2196f3;
-            border-radius: 20px;
-            padding: 40px;
-            margin: 40px auto;
-            max-width: 600px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(33, 150, 243, 0.3);
-            animation: hologram-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes hologram-glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(33, 150, 243, 0.3); }
-            50% { box-shadow: 0 0 50px rgba(33, 150, 243, 0.6); }
-        }
-
-        .hologram-core {
-            font-size: 6rem;
-            margin-bottom: 20px;
-        }
-
-        .hologram-title {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #1565c0;
-            letter-spacing: 5px;
-            margin-bottom: 30px;
-        }
-
-        .hologram-connections {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-
-        .connection-icon {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .connection-icon:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .connection-icon:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        .connection-icon:nth-child(4) {
-            animation-delay: 0.6s;
-        }
-
-        .speech-bubble-inspiring {
-            background: #ffffff;
-            border: 3px solid #1a1a1a;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 40px auto;
-            max-width: 700px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        /* Painel de Transição */
-        .panel-transition {
-            background: linear-gradient(135deg, #1a1a1a, #333333);
-            color: #ffffff;
-        }
-
-        .transition-text {
-            text-align: center;
-        }
-
-        .typing-effect {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .continue-button {
-            background: #2196f3;
-            color: #ffffff;
-            border: none;
-            padding: 20px 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
-        }
-
-        .continue-button:hover {
-            background: #1976d2;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.6);
-        }
-
-        /* ===== PARTE 2: O DOJO DE INOVAÇÕES ===== */
-        #dojo-section {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-            padding: 60px 20px;
-        }
-
-        #dojo-section.active {
-            display: block;
-        }
-
-        .dojo-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .dojo-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #1a1a1a;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .dojo-instruction {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 60px;
-            font-style: italic;
-        }
-
-        .targets-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 80px;
-        }
-
-        .target {
-            background: #ffffff;
-            border: 3px solid #1a1a1a;
-            border-radius: 15px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .target:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-color: #2196f3;
-        }
-
-        .target.solved {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .target-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-        }
-
-        .target-label {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        /* Prateleira de Armas */
-        .weapons-shelf {
-            background: #1a1a1a;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .shelf-title {
-            color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .shelf-icons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            min-height: 80px;
-        }
-
-        .shelf-icon {
-            font-size: 2.5rem;
-            animation: unlock 0.5s ease-out;
-        }
-
-        @keyframes unlock {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-
-        /* Modal de Solução */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            border: 4px solid #1a1a1a;
-            border-radius: 20px;
-            max-width: 700px;
-            width: 90%;
-            padding: 40px;
-            animation: modal-appear 0.4s ease-out;
-        }
-
-        @keyframes modal-appear {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .solution-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-
-        .solution-name {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #2196f3;
-        }
-
-        .modal-body {
-            margin-bottom: 30px;
-        }
-
-        .transformation {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .from-section,
-        .to-section {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .from-section {
-            background: #ffebee;
-            border: 2px solid #ef5350;
-        }
-
-        .to-section {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-        }
-
-        .section-label {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            color: #666;
-        }
-
-        .problem-icon,
-        .solution-icon-small {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .problem-text,
-        .solution-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .arrow {
-            font-size: 3rem;
-        }
-
-        .modal-footer {
-            text-align: center;
-        }
-
-        .close-button {
-            background: #2196f3;
-            color: #ffffff;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-button:hover {
-            background: #1976d2;
-            transform: translateY(-2px);
-        }
-
-        /* ===== PARTE 3: O PORTAL ===== */
-        #portal-section {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a1a, #333333);
-            color: #ffffff;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-        }
-
-        #portal-section.active {
-            display: flex;
-        }
-
-        .portal-container {
-            text-align: center;
-            max-width: 800px;
-            position: relative;
-        }
-
-        .cobdesk-logo-bg {
-            margin-bottom: 40px;
-        }
-
-        .logo-pulse {
-            font-size: 8rem;
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px rgba(33, 150, 243, 0.5));
-            }
-            50% { 
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 40px rgba(33, 150, 243, 0.8));
-            }
-        }
-
-        .portal-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            animation: fade-in-up 1s ease-out;
-        }
-
-        .portal-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 50px;
-            color: #cccccc;
-            animation: fade-in-up 1s ease-out 0.2s both;
-        }
-
-        @keyframes fade-in-up {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .portal-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #2196f3, #1976d2);
-            color: #ffffff;
-            text-decoration: none;
-            padding: 25px 60px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.4);
-            animation: fade-in-up 1s ease-out 0.4s both;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .portal-button::before {
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            max-width: 900px;
+        }
+
+        .hero-icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            background: var(--bg-secondary);
+            padding: 80px 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .problem-card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .problem-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--danger);
+        }
+
+        .problem-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+            padding: 80px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow);
+            z-index: 2;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: var(--bg-secondary);
+            padding: 80px 0;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .solution-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .solution-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .solution-card-header-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .solution-card-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .solution-card-body {
+            padding: 30px;
+        }
+
+        .solution-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .comparison-before,
+        .comparison-after {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .comparison-before {
+            background: #FFEBEE;
+            border: 2px solid var(--danger);
+        }
+
+        .comparison-after {
+            background: #E8F5E9;
+            border: 2px solid var(--success);
+        }
+
+        .comparison-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+
+        .comparison-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .comparison-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .comparison-arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-secondary);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(0, 122, 255, 0.5));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 40px rgba(0, 122, 255, 0.8));
+            }
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
             content: '';
             position: absolute;
             top: 50%;
@@ -769,553 +471,506 @@
             transition: width 0.6s, height 0.6s;
         }
 
-        .portal-button:hover::before {
-            width: 300px;
-            height: 300px;
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
         }
 
-        .portal-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(33, 150, 243, 0.6);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 122, 255, 0.4);
         }
 
-        /* ===== RESPONSIVIDADE ===== */
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .manga-title h1 {
+            .hero h1 {
                 font-size: 2.5rem;
             }
-            
-            .manga-title h2 {
-                font-size: 1.3rem;
-            }
-            
-            .mini-panels-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .transformation {
-                grid-template-columns: 1fr;
-            }
-            
-            .arrow {
-                transform: rotate(90deg);
-            }
-            
-            .dojo-title {
-                font-size: 2.5rem;
-            }
-            
-            .portal-title {
-                font-size: 2.5rem;
-            }
-            
-            .portal-text {
-                font-size: 1.1rem;
-            }
-            
-            .portal-button {
-                padding: 20px 40px;
+
+            .hero p {
                 font-size: 1.2rem;
             }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                padding-left: 60px;
+            }
+
+            .timeline-icon {
+                position: absolute;
+                left: 0;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .timeline-content {
+                margin: 0;
+                width: 100%;
+            }
+
+            .solution-comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .comparison-arrow {
+                transform: rotate(90deg);
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 18px 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- PARTE 1: O MANGÁ -->
-    <section id="manga-section" class="active">
-        <div class="manga-container">
-            <!-- Painel 1: A Chegada -->
-            <div class="manga-panel panel-full fade-in" data-panel="1">
-                <div class="panel-content">
-                    <div class="manga-title">
-                        <h1>As Crônicas de Cob</h1>
-                        <h2>A Jornada pela Modernização</h2>
-                    </div>
-                    <div class="narrator-box top-left">
-                        <p>Ano 20XX. O Domínio Pan, um gigante financeiro, enfrentava uma crise silenciosa em seu setor mais esquecido: a <strong>Cobrança</strong>.</p>
-                    </div>
-                    <div class="narrator-box bottom-right">
-                        <p>Um novo líder, <strong>Andore</strong>, chegou. Trazia consigo a fama de ser um estrategista implacável e uma visão de futuro.</p>
-                    </div>
-                    <div class="hero-silhouette">
-                        <div class="hero-figure">👤</div>
-                        <div class="building-background">🏢</div>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">🎯</div>
+            <h1>Cobdesk</h1>
+            <p>A Revolução da Cobrança Inteligente no Banco Pan</p>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>O Desafio</h2>
+                <p>O setor de cobrança enfrentava obstáculos críticos que impediam a eficiência e a inovação</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card fade-in">
+                    <span class="problem-card-icon">😫</span>
+                    <h3>Processos Manuais</h3>
+                    <p>Operações lentas e repetitivas que consomem tempo e recursos valiosos, gerando frustração nas equipes.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <span class="problem-card-icon">🌀</span>
+                    <h3>Ferramentas Complexas</h3>
+                    <p>Sistemas pesados com múltiplas abas e caminhos confusos, dificultando o trabalho diário dos operadores.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <span class="problem-card-icon">📉</span>
+                    <h3>Baixa Performance</h3>
+                    <p>Falta de inteligência e dados acionáveis resultando em baixas taxas de recuperação e moral da equipe.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <span class="problem-card-icon">💢</span>
+                    <h3>Experiência do Cliente</h3>
+                    <p>Jornada fragmentada e frustrante, com atendimento lento e falta de transparência nos processos.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Painel 2: O Diagnóstico Sombrio -->
-            <div class="manga-panel panel-full fade-in" data-panel="2">
-                <div class="panel-content">
-                    <div class="mini-panels-row">
-                        <div class="mini-panel">
-                            <div class="mini-content">
-                                <div class="character-face stressed">😫</div>
-                                <div class="floating-icons">
-                                    <span>😫</span>
-                                    <span>🤯</span>
-                                </div>
-                                <div class="screen-chaos">💻</div>
-                            </div>
-                        </div>
-                        <div class="mini-panel">
-                            <div class="mini-content">
-                                <div class="character-face angry">😠</div>
-                                <div class="anger-mark">💢</div>
-                                <div class="speech-bubble">
-                                    <p>DE NOVO?! Eu já paguei! Por que ninguém se entende aí?!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mini-panel">
-                            <div class="mini-content">
-                                <div class="chart-down">📉</div>
-                                <div class="onomatopoeia">ZUUUM...</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="corridor-scene">
-                        <div class="hero-walking">🚶</div>
-                        <div class="sad-operators">
-                            <span>😔</span>
-                            <span>😔</span>
-                            <span>😔</span>
-                        </div>
-                        <div class="thought-bubble">
-                            <p><em>"Processos manuais... Ferramentas arcaicas... A moral está no chão. Estamos perdendo a batalha antes mesmo de ela começar."</em></p>
-                        </div>
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>A Jornada da Transformação</h2>
+                <p>Como André Calabró liderou a revolução da cobrança no Banco Pan</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">🚶</div>
+                    <div class="timeline-content">
+                        <h3>O Diagnóstico</h3>
+                        <p>André chegou ao Banco Pan e identificou que o setor de cobrança operava com métodos ultrapassados, baixo investimento em tecnologia e uma equipe desmotivada. Era necessária uma transformação radical.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Painel 3: O Ponto de Virada -->
-            <div class="manga-panel panel-impact fade-in" data-panel="3">
-                <div class="panel-content">
-                    <div class="impact-scene">
-                        <div class="hero-action">✊</div>
-                        <div class="table-slam">🪑</div>
-                        <div class="onomatopoeia-large">DON!!!</div>
-                        <div class="impact-lines"></div>
-                        <div class="speech-bubble-explosive">
-                            <p><strong>CHEGA! Não vamos mais remendar o velho. VAMOS FORJAR O NOVO!</strong></p>
-                        </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">💡</div>
+                    <div class="timeline-content">
+                        <h3>A Visão</h3>
+                        <p>Em vez de apenas otimizar processos existentes, André propôs construir um ecossistema completamente novo: o Cobdesk. Uma plataforma central que integraria inteligência artificial, gamificação e ferramentas modernas.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Painel 4: A Visão do Futuro -->
-            <div class="manga-panel panel-full fade-in" data-panel="4">
-                <div class="panel-content">
-                    <div class="vision-scene">
-                        <div class="hero-presenting">🧑‍💼</div>
-                        <div class="team-silhouettes">
-                            <span>👥</span>
-                            <span>👥</span>
-                            <span>👥</span>
-                        </div>
-                        <div class="hologram">
-                            <div class="hologram-core">🧠</div>
-                            <div class="hologram-title">COBDESK</div>
-                            <div class="hologram-connections">
-                                <span class="connection-icon">👤</span>
-                                <span class="connection-icon">📊</span>
-                                <span class="connection-icon">💰</span>
-                                <span class="connection-icon">💬</span>
-                            </div>
-                        </div>
-                        <div class="speech-bubble-inspiring">
-                            <p>Este é o <strong>Cobdesk</strong>. Nosso novo centro de comando. Uma plataforma única que nos dará a inteligência, a agilidade e as ferramentas para transformar a cobrança de um custo em um centro de excelência.</p>
-                        </div>
-                        <div class="narrator-box bottom">
-                            <p><em>A semente da revolução havia sido plantada. A construção do novo arsenal estava prestes a começar...</em></p>
-                        </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">⚙️</div>
+                    <div class="timeline-content">
+                        <h3>A Construção</h3>
+                        <p>Formação de squads ágeis, implementação de metodologias modernas e desenvolvimento de 11 ferramentas Cobby especializadas, cada uma resolvendo um problema específico do modelo tradicional.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Transição -->
-            <div class="manga-panel panel-transition fade-in" data-panel="5">
-                <div class="panel-content">
-                    <div class="transition-text">
-                        <p class="typing-effect">Continue para desbloquear o arsenal...</p>
-                        <button id="continue-to-dojo" class="continue-button">Avançar</button>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">🚀</div>
+                    <div class="timeline-content">
+                        <h3>O Futuro</h3>
+                        <p>O Cobdesk está pronto para transformar a cobrança de um centro de custo em um centro de excelência, com processos inteligentes, equipes engajadas e clientes satisfeitos.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PARTE 2: O DOJO DE INOVAÇÕES -->
-    <section id="dojo-section">
-        <div class="dojo-container">
-            <h1 class="dojo-title">O Dojo de Inovações</h1>
-            <p class="dojo-instruction">Clique nos desafios para forjar a solução</p>
-            
-            <div class="targets-container">
-                <!-- Alvos (Desafios) -->
-                <div class="target" data-challenge="contratacao">
-                    <div class="target-icon">👤❓</div>
-                    <div class="target-label">Contratação Genérica</div>
-                </div>
-                
-                <div class="target" data-challenge="treinamento">
-                    <div class="target-icon">😴</div>
-                    <div class="target-label">Treinamento Passivo</div>
-                </div>
-                
-                <div class="target" data-challenge="onboarding">
-                    <div class="target-icon">⏱️</div>
-                    <div class="target-label">Onboarding Superficial</div>
-                </div>
-                
-                <div class="target" data-challenge="qualidade">
-                    <div class="target-icon">🔍</div>
-                    <div class="target-label">Qualidade Reativa</div>
-                </div>
-                
-                <div class="target" data-challenge="feedback">
-                    <div class="target-icon">📝</div>
-                    <div class="target-label">Feedback Lento</div>
-                </div>
-                
-                <div class="target" data-challenge="crm">
-                    <div class="target-icon">🌀</div>
-                    <div class="target-label">CRM Complexo</div>
-                </div>
-                
-                <div class="target" data-challenge="scoring">
-                    <div class="target-icon">🧊</div>
-                    <div class="target-label">Scoring Estático</div>
-                </div>
-                
-                <div class="target" data-challenge="intranet">
-                    <div class="target-icon">📄</div>
-                    <div class="target-label">Intranet Básica</div>
-                </div>
-                
-                <div class="target" data-challenge="incentivos">
-                    <div class="target-icon">💵</div>
-                    <div class="target-label">Incentivos Padrão</div>
-                </div>
-                
-                <div class="target" data-challenge="poscobranca">
-                    <div class="target-icon">✅</div>
-                    <div class="target-label">Pós-cobrança Limitada</div>
-                </div>
-                
-                <div class="target" data-challenge="gestao">
-                    <div class="target-icon">📊</div>
-                    <div class="target-label">Gestão Simplificada</div>
-                </div>
+    <!-- Solutions Section -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>O Ecossistema Cobby</h2>
+                <p>11 ferramentas integradas que revolucionam cada etapa do processo de cobrança</p>
             </div>
-
-            <!-- Prateleira de Armas (Progresso) -->
-            <div class="weapons-shelf">
-                <div class="shelf-title">Arsenal Desbloqueado</div>
-                <div class="shelf-icons" id="shelf-icons"></div>
-            </div>
-        </div>
-
-        <!-- Modal de Solução -->
-        <div id="solution-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="solution-icon" id="solution-icon"></div>
-                    <h2 class="solution-name" id="solution-name"></h2>
-                </div>
-                <div class="modal-body">
-                    <div class="transformation">
-                        <div class="from-section">
-                            <div class="section-label">DE</div>
-                            <div class="problem-icon" id="problem-icon"></div>
-                            <p class="problem-text" id="problem-text"></p>
-                        </div>
-                        <div class="arrow">➡️</div>
-                        <div class="to-section">
-                            <div class="section-label">PARA</div>
-                            <div class="solution-icon-small" id="solution-icon-small"></div>
-                            <p class="solution-text" id="solution-text"></p>
+            <div class="solutions-grid">
+                <!-- Solution 1 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🎯</div>
+                        <h3>Cobby Profile & Maps</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">👤❓</div>
+                                <div class="comparison-text">CV + dinâmica padrão, foco genérico</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🎯</div>
+                                <div class="comparison-text">Perfil comportamental orienta funil e aderência por tipo de operação</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button id="close-modal" class="close-button">Entendido!</button>
+
+                <!-- Solution 2 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">📺</div>
+                        <h3>Streaming</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">😴</div>
+                                <div class="comparison-text">Sala de aula + prova</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">📺</div>
+                                <div class="comparison-text">Ambientes colaborativos em tempo real integrados a Twitch e Discord</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 3 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🏝️</div>
+                        <h3>Ilha dos Primeiros Passos</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">⏱️</div>
+                                <div class="comparison-text">1 semana em célula "baby"</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🏝️</div>
+                                <div class="comparison-text">15 dias de imersão + 90 dias de sustentação com Cobby Coins</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 4 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">☁️</div>
+                        <h3>Cobby InsightCloud</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">🔍</div>
+                                <div class="comparison-text">Reciclagem por amostra e monitoria</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">☁️</div>
+                                <div class="comparison-text">Análise 100% com IA e recomendações neuro-linguísticas</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 5 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">📈</div>
+                        <h3>Cobby Growth Path</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">📝</div>
+                                <div class="comparison-text">Acompanhamento pós-produção, reativo</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">📈</div>
+                                <div class="comparison-text">App com métricas em tempo real e sugestões da IA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 6 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🌉</div>
+                        <h3>Cobby Bridge</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">🌀</div>
+                                <div class="comparison-text">Muitas abas e caminhos; pesado</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🌉</div>
+                                <div class="comparison-text">CRM simplificado otimizado para WhatsApp com gamificação</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 7 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🫧</div>
+                        <h3>Cobby Bubble</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">🧊</div>
+                                <div class="comparison-text">Bureaus estáticos (Lemit/Serasa)</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🫧</div>
+                                <div class="comparison-text">Segmentação por bolhas de similaridade e estratégia por cluster</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 8 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🔗</div>
+                        <h3>Cobby Connect</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">📄</div>
+                                <div class="comparison-text">Informações básicas unidirecionais</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🔗</div>
+                                <div class="comparison-text">Rede social interna com feed, mural e networking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 9 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🏦</div>
+                        <h3>Cobby Bank + Store</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">💵</div>
+                                <div class="comparison-text">Padrões de RV e performance</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🏦</div>
+                                <div class="comparison-text">Gamificação diária com Cobby Coins trocados por prêmios</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 10 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🎁</div>
+                        <h3>Cobby da Sorte</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">✅</div>
+                                <div class="comparison-text">Foco apenas na quitação</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🎁</div>
+                                <div class="comparison-text">Recompensas, sorteios e app de retenção</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solution 11 -->
+                <div class="solution-card fade-in">
+                    <div class="solution-card-header">
+                        <div class="solution-card-header-icon">🗺️</div>
+                        <h3>Cobby Maps</h3>
+                    </div>
+                    <div class="solution-card-body">
+                        <div class="solution-comparison">
+                            <div class="comparison-before">
+                                <div class="comparison-label">Antes</div>
+                                <div class="comparison-icon">📊</div>
+                                <div class="comparison-text">Modelo simplificado, pouca visão analítica</div>
+                            </div>
+                            <div class="comparison-arrow">→</div>
+                            <div class="comparison-after">
+                                <div class="comparison-label">Agora</div>
+                                <div class="comparison-icon">🗺️</div>
+                                <div class="comparison-text">Dashboards completos com PDI/PIP e Magic Grip</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PARTE 3: O PORTAL -->
-    <section id="portal-section">
-        <div class="portal-container">
-            <div class="cobdesk-logo-bg">
-                <div class="logo-pulse">🎯</div>
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-title" style="color: white;">
+                <h2 style="-webkit-text-fill-color: white;">Valor Gerado</h2>
+                <p style="color: rgba(255, 255, 255, 0.9);">O impacto do Cobdesk em três pilares fundamentais</p>
             </div>
-            <h1 class="portal-title">Sua Jornada Começa Agora.</h1>
-            <p class="portal-text">Você desvendou os segredos do novo arsenal. Agora, é sua vez de liderar. Entre no Cobdesk e comande a revolução da cobrança.</p>
-            
-            <!-- BOTÃO COM PLACEHOLDER PARA O LINK -->
-            <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="portal-button">
-                Entrar no Cobdesk
-            </a>
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">👤</div>
+                    <div class="stat-number">+50%</div>
+                    <div class="stat-label">Engajamento dos Operadores</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Visibilidade das Operações</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-number">+40%</div>
+                    <div class="stat-label">Satisfação do Cliente</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content fade-in">
+                <div class="cta-icon">🎯</div>
+                <h2>Sua Jornada Começa Agora</h2>
+                <p>Você conheceu os desafios, acompanhou a transformação e descobriu as soluções. Agora é hora de experimentar o Cobdesk e liderar a revolução da cobrança inteligente.</p>
+                <a href="https://script.google.com/a/macros/aalima.com.br/s/AKfycbzS2Tofm-NQhO5BAspDlmHgXewmAkPvAzEB2uNEm1iD0BKrYzR9YfdmZirtGIznV4LVpw/exec" target="_blank" class="cta-button">
+                    <span>Entrar no Cobdesk</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <script>
-        // ===== DADOS DAS SOLUÇÕES COBBY =====
-        const solutions = {
-            contratacao: {
-                name: 'Cobby Profile & Cobby Maps',
-                icon: '🎯',
-                problemIcon: '👤❓',
-                problemText: 'CV + dinâmica padrão, foco genérico.',
-                solutionIcon: '🎯',
-                solutionText: 'Perfil comportamental (Modelo similar ao: DISC e MBTI) orienta funil e aderência por tipo de operação.'
-            },
-            treinamento: {
-                name: 'Streaming (Salas de Desenvolvimento)',
-                icon: '📺',
-                problemIcon: '😴',
-                problemText: 'Sala de aula + prova.',
-                solutionIcon: '📺',
-                solutionText: 'Ambientes colaborativos em tempo real para cocriação, testes e evolução contínua. Integrado às plataformas mais adaptadas da nova geração — como Twitch e Discord — une interação, aprendizado e desenvolvimento ágil.'
-            },
-            onboarding: {
-                name: 'Ilha dos Primeiros Passos',
-                icon: '🏝️',
-                problemIcon: '⏱️',
-                problemText: '1 semana em célula "baby" ou direto na operação.',
-                solutionIcon: '🏝️',
-                solutionText: '15 dias de imersão + teste prático; 90 dias de salas de sustentação com dicas dos top performers e distribuição de Cobby Coins.'
-            },
-            qualidade: {
-                name: 'Cobby InsightCloud',
-                icon: '☁️',
-                problemIcon: '🔍',
-                problemText: 'Reciclagem por amostra e monitoria.',
-                solutionIcon: '☁️',
-                solutionText: 'Análise de áudio e texto, comparação com top performers e recomendações de melhoria neuro-linguística. A tão sonhada Nuvem de Contexto para sua operação.'
-            },
-            feedback: {
-                name: 'Cobby Growth Path',
-                icon: '📈',
-                problemIcon: '📝',
-                problemText: 'Acompanhamento pós-produção, reativo.',
-                solutionIcon: '📈',
-                solutionText: 'App no smartphone com métricas em tempo real e sugestões da IA.'
-            },
-            crm: {
-                name: 'Cobby Bridge',
-                icon: '🌉',
-                problemIcon: '🌀',
-                problemText: 'Muitas abas e caminhos; pesado.',
-                solutionIcon: '🌉',
-                solutionText: 'CRM simplificado e "skinnable", integra canais e muda a pele por campanha. Finalizações rápidas em poucos cliques. Otimizado para WhatsApp e com gamificação para engajar a equipe.'
-            },
-            scoring: {
-                name: 'Cobby Bubble MCP + Cobby Brian',
-                icon: '🫧',
-                problemIcon: '🧊',
-                problemText: 'Bureaus (prateleira) — Lemit/Serasa.',
-                solutionIcon: '🫧',
-                solutionText: 'Segmentação por "bolhas" de similaridade, estratégia e incentivo sob medida por cluster.'
-            },
-            intranet: {
-                name: 'Cobby Connect',
-                icon: '🔗',
-                problemIcon: '📄',
-                problemText: 'Informações básicas unidirecionais.',
-                solutionIcon: '🔗',
-                solutionText: 'Rede social interna: feed, mural, networking e clima conectado à empresa.'
-            },
-            incentivos: {
-                name: 'Cobby Bank + Store',
-                icon: '🏦',
-                problemIcon: '💵',
-                problemText: 'Padrões de RV e performance.',
-                solutionIcon: '🏦',
-                solutionText: 'Gamificação diária: Cobby Coins trocados por prêmios de acordo com a experiência.'
-            },
-            poscobranca: {
-                name: 'Cobby da Sorte + Rewards Center',
-                icon: '🎁',
-                problemIcon: '✅',
-                problemText: 'Foco apenas na quitação.',
-                solutionIcon: '🎁',
-                solutionText: 'Token/recompensas, sorteios mensais e app de acompanhamento para retenção.'
-            },
-            gestao: {
-                name: 'Cobby Maps',
-                icon: '🗺️',
-                problemIcon: '📊',
-                problemText: 'Modelo simplificado, pouca visão analítica.',
-                solutionIcon: '🗺️',
-                solutionText: 'Dashboards: produtividade, PDI/PIP, pipeline de indicadores, mapa de liderança e "Magic Grip".'
-            }
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        // ===== VARIÁVEIS GLOBAIS =====
-        let solvedCount = 0;
-        const totalTargets = Object.keys(solutions).length;
-
-        // ===== PARTE 1: MANGÁ =====
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animação de scroll para os painéis do mangá
-            const mangaPanels = document.querySelectorAll('.manga-panel');
-            
-            const observerOptions = {
-                threshold: 0.3,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const panelObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, observerOptions);
-            
-            mangaPanels.forEach(panel => {
-                panelObserver.observe(panel);
-            });
-            
-            // Botão de continuar para o Dojo
-            const continueButton = document.getElementById('continue-to-dojo');
-            if (continueButton) {
-                continueButton.addEventListener('click', function() {
-                    document.getElementById('manga-section').classList.remove('active');
-                    document.getElementById('dojo-section').classList.add('active');
-                    window.scrollTo(0, 0);
-                });
-            }
-        });
-
-        // ===== PARTE 2: DOJO DE INOVAÇÕES =====
-        const targets = document.querySelectorAll('.target');
-        const modal = document.getElementById('solution-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-        const shelfIcons = document.getElementById('shelf-icons');
-
-        targets.forEach(target => {
-            target.addEventListener('click', function() {
-                if (this.classList.contains('solved')) return;
-                
-                const challenge = this.getAttribute('data-challenge');
-                const solution = solutions[challenge];
-                
-                // Preencher o modal com os dados da solução
-                document.getElementById('solution-icon').textContent = solution.icon;
-                document.getElementById('solution-name').textContent = solution.name;
-                document.getElementById('problem-icon').textContent = solution.problemIcon;
-                document.getElementById('problem-text').textContent = solution.problemText;
-                document.getElementById('solution-icon-small').textContent = solution.solutionIcon;
-                document.getElementById('solution-text').textContent = solution.solutionText;
-                
-                // Mostrar o modal
-                modal.classList.add('active');
-                
-                // Marcar o alvo como resolvido
-                this.classList.add('solved');
-                
-                // Adicionar ícone à prateleira
-                const shelfIcon = document.createElement('div');
-                shelfIcon.className = 'shelf-icon';
-                shelfIcon.textContent = solution.icon;
-                shelfIcons.appendChild(shelfIcon);
-                
-                solvedCount++;
-                
-                // Verificar se todos os desafios foram resolvidos
-                if (solvedCount === totalTargets) {
-                    setTimeout(() => {
-                        completeDojoPhase();
-                    }, 1000);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
         });
 
-        closeModalBtn.addEventListener('click', function() {
-            modal.classList.remove('active');
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.problem-section').scrollIntoView({ behavior: 'smooth' });
         });
-
-        // Fechar modal ao clicar fora dele
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-            }
-        });
-
-        // ===== TRANSIÇÃO PARA O PORTAL =====
-        function completeDojoPhase() {
-            // Animação de conclusão
-            const dojoContainer = document.querySelector('.dojo-container');
-            const completionMessage = document.createElement('div');
-            completionMessage.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, 0.95);
-                color: white;
-                padding: 40px 60px;
-                border-radius: 20px;
-                font-size: 2rem;
-                font-weight: 900;
-                text-align: center;
-                z-index: 2000;
-                animation: fade-in-up 0.5s ease-out;
-            `;
-            completionMessage.innerHTML = `
-                <div style="font-size: 4rem; margin-bottom: 20px;">✨</div>
-                <div>Arsenal Completo.</div>
-                <div style="font-size: 1.5rem; margin-top: 15px; font-weight: 400;">O Centro de Comando está Operacional.</div>
-                <button id="go-to-portal" style="
-                    margin-top: 30px;
-                    background: #2196f3;
-                    color: white;
-                    border: none;
-                    padding: 15px 40px;
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                    border-radius: 10px;
-                    cursor: pointer;
-                ">Continuar</button>
-            `;
-            
-            document.body.appendChild(completionMessage);
-            
-            document.getElementById('go-to-portal').addEventListener('click', function() {
-                completionMessage.remove();
-                document.getElementById('dojo-section').classList.remove('active');
-                document.getElementById('portal-section').classList.add('active');
-                window.scrollTo(0, 0);
-            });
-        }
-
-        // ===== EFEITO DE DIGITAÇÃO (OPCIONAL) =====
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.textContent = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            
-            type();
-        }
-
-        // Aplicar efeito de digitação ao texto de transição
-        const typingElement = document.querySelector('.typing-effect');
-        if (typingElement) {
-            const originalText = typingElement.textContent;
-            typeWriter(typingElement, originalText, 80);
-        }
     </script>
 </body>
 </html>
