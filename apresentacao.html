@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Cobdesk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            border: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        iframe.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 122, 255, 0.3);
+            border-color: #007AFF;
+        }
+
+        .nav-button.active {
+            background: #007AFF;
+            border-color: #007AFF;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .home-button:hover {
+            background: rgba(0, 122, 255, 0.3);
+            border-color: #007AFF;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                bottom: 20px;
+                padding: 12px 20px;
+                gap: 10px;
+            }
+
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+
+            .home-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navigation {
+                bottom: 15px;
+                padding: 10px 15px;
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-button {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+
+            .home-button {
+                top: 15px;
+                left: 15px;
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">← Voltar ao Início</a>
+
+    <iframe id="parte1" src="parte1-historia.html"></iframe>
+    <iframe id="parte2" src="parte2-solucao.html"></iframe>
+    <iframe id="parte3" src="parte3-ecossistema.html"></iframe>
+
+    <div class="navigation">
+        <button class="nav-button" id="btn-parte1">Parte 1</button>
+        <button class="nav-button" id="btn-parte2">Parte 2</button>
+        <button class="nav-button" id="btn-parte3">Parte 3</button>
+    </div>
+
+    <script>
+        // Get start parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const startPart = parseInt(urlParams.get('start')) || 1;
+
+        // Define the order based on starting point
+        let partOrder = [];
+        switch(startPart) {
+            case 1:
+                partOrder = [1, 2, 3];
+                break;
+            case 2:
+                partOrder = [2, 3, 1];
+                break;
+            case 3:
+                partOrder = [3, 1, 2];
+                break;
+            default:
+                partOrder = [1, 2, 3];
+        }
+
+        let currentIndex = 0;
+        const iframes = {
+            1: document.getElementById('parte1'),
+            2: document.getElementById('parte2'),
+            3: document.getElementById('parte3')
+        };
+
+        const buttons = {
+            1: document.getElementById('btn-parte1'),
+            2: document.getElementById('btn-parte2'),
+            3: document.getElementById('btn-parte3')
+        };
+
+        function showPart(partNumber) {
+            // Hide all iframes
+            Object.values(iframes).forEach(iframe => {
+                iframe.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            Object.values(buttons).forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected iframe
+            iframes[partNumber].classList.add('active');
+            buttons[partNumber].classList.add('active');
+
+            // Update current index
+            currentIndex = partOrder.indexOf(partNumber);
+        }
+
+        function nextPart() {
+            if (currentIndex < partOrder.length - 1) {
+                currentIndex++;
+                showPart(partOrder[currentIndex]);
+            }
+        }
+
+        function prevPart() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showPart(partOrder[currentIndex]);
+            }
+        }
+
+        // Button click handlers
+        buttons[1].addEventListener('click', () => showPart(1));
+        buttons[2].addEventListener('click', () => showPart(2));
+        buttons[3].addEventListener('click', () => showPart(3));
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && e.ctrlKey) {
+                e.preventDefault();
+                nextPart();
+            } else if (e.key === 'ArrowLeft' && e.ctrlKey) {
+                e.preventDefault();
+                prevPart();
+            }
+        });
+
+        // Listen for messages from iframes (when they reach the end)
+        window.addEventListener('message', (event) => {
+            if (event.data === 'slideshow-ended') {
+                nextPart();
+            }
+        });
+
+        // Show first part in the order
+        showPart(partOrder[0]);
+
+        // Update page title based on order
+        document.title = `Apresentação Cobdesk - Começando pela Parte ${startPart}`;
+    </script>
+</body>
+</html>
