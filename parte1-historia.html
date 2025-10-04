@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parte 1: A História de André Calabró</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 80px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Navigation */
+        .slide-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #007AFF;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .nav-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #98989D;
+            font-size: 0.9rem;
+            z-index: 100;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 7rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+        }
+
+        h3 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #98989D;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .subtitle {
+            font-size: 2.5rem;
+            color: #98989D;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: #007AFF;
+            font-weight: 600;
+        }
+
+        /* Icon */
+        .icon {
+            font-size: 10rem;
+            margin-bottom: 40px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Quote */
+        .quote {
+            font-size: 3rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #FFFFFF;
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border-left: 6px solid #007AFF;
+            text-align: left;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            color: #007AFF;
+            opacity: 0.3;
+        }
+
+        .quote-author {
+            font-size: 1.5rem;
+            color: #98989D;
+            margin-top: 30px;
+            font-weight: 400;
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .card h4 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #98989D;
+        }
+
+        /* Timeline */
+        .timeline-vertical {
+            max-width: 800px;
+            margin: 60px auto;
+            position: relative;
+            padding-left: 100px;
+        }
+
+        .timeline-vertical::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #007AFF, #5856D6);
+        }
+
+        .timeline-step {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .timeline-step-icon {
+            position: absolute;
+            left: -60px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 122, 255, 0.4);
+        }
+
+        .timeline-step-content {
+            text-align: left;
+        }
+
+        .timeline-step h4 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #007AFF;
+        }
+
+        .timeline-step p {
+            font-size: 1.5rem;
+            line-height: 1.7;
+            color: #98989D;
+            margin: 0;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 80px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-label {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            color: #98989D;
+        }
+
+        /* Next Button */
+        .next-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 60px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+        }
+
+        .next-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 122, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            h1 { font-size: 4rem; }
+            h2 { font-size: 3.5rem; }
+            h3 { font-size: 2.5rem; }
+            p { font-size: 1.4rem; }
+            .quote { font-size: 2rem; padding: 40px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .timeline-vertical { padding-left: 80px; }
+        }
+
+        /* Animations */
+        .slide.active .slide-content > * {
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Título -->
+    <div class="slide active" data-slide="0">
+        <div class="slide-content">
+            <div class="icon">📖</div>
+            <h1 class="gradient-text">A História</h1>
+            <p class="subtitle">A jornada de André Calabró na transformação da cobrança do Banco Pan</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: A Chegada -->
+    <div class="slide" data-slide="1">
+        <div class="slide-content">
+            <h2>A Chegada</h2>
+            <p>Ano 2023. <span class="highlight">André Calabró</span> assume a liderança da área de cobrança do Banco Pan.</p>
+            <p>Um setor esquecido. Baixo investimento. Processos ultrapassados. Equipe desmotivada.</p>
+            <div class="icon" style="margin-top: 60px;">🚶</div>
+        </div>
+    </div>
+
+    <!-- Slide 3: O Diagnóstico -->
+    <div class="slide" data-slide="2">
+        <div class="slide-content">
+            <h2>O Diagnóstico</h2>
+            <p>André mergulha na operação e descobre um cenário crítico</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">⏳</span>
+                    <h4>Processos Manuais</h4>
+                    <p>Operações lentas, repetitivas e ineficientes consumindo tempo valioso</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌀</span>
+                    <h4>Ferramentas Complexas</h4>
+                    <p>Sistemas pesados com múltiplas abas dificultando o trabalho</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">😫</span>
+                    <h4>Equipe Desmotivada</h4>
+                    <p>Alto turnover e baixo engajamento dos operadores</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📉</span>
+                    <h4>Baixa Performance</h4>
+                    <p>Taxas de recuperação abaixo do potencial do mercado</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: O Momento de Virada -->
+    <div class="slide" data-slide="3">
+        <div class="slide-content">
+            <h2>O Momento de Virada</h2>
+            <div class="quote">
+                CHEGA! Não vamos mais remendar o velho. Vamos criar algo completamente novo. Vamos transformar a cobrança de um centro de custo em um centro de excelência.
+                <div class="quote-author">— André Calabró</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: A Decisão -->
+    <div class="slide" data-slide="4">
+        <div class="slide-content">
+            <h2>A Decisão</h2>
+            <p>Em vez de otimizar processos antigos, André decide construir do zero</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-label">Visão Clara</div>
+                    <div class="stat-value">Transformação radical</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-label">Pessoas Primeiro</div>
+                    <div class="stat-value">Engajamento e desenvolvimento</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-label">Tecnologia</div>
+                    <div class="stat-value">Inovação e inteligência</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Visão Squad -->
+    <div class="slide" data-slide="5">
+        <div class="slide-content">
+            <h2>Visão Squad</h2>
+            <p>André implementa uma nova forma de trabalhar: <span class="highlight">equipes ágeis e autônomas</span></p>
+            <div class="timeline-vertical">
+                <div class="timeline-step">
+                    <div class="timeline-step-icon">👥</div>
+                    <div class="timeline-step-content">
+                        <h4>Formação de Squads</h4>
+                        <p>Equipes multidisciplinares com autonomia para tomar decisões e experimentar soluções</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-step-icon">⚡</div>
+                    <div class="timeline-step-content">
+                        <h4>Metodologia Ágil</h4>
+                        <p>Ciclos rápidos de desenvolvimento, testes e aprendizado contínuo</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-step-icon">🎓</div>
+                    <div class="timeline-step-content">
+                        <h4>Cultura de Aprendizado</h4>
+                        <p>Investimento em capacitação, experimentação e compartilhamento de conhecimento</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-step-icon">🏆</div>
+                    <div class="timeline-step-content">
+                        <h4>Reconhecimento</h4>
+                        <p>Sistema de meritocracia e valorização das conquistas individuais e coletivas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: API e Autoatendimento -->
+    <div class="slide" data-slide="6">
+        <div class="slide-content">
+            <h2>API e Autoatendimento</h2>
+            <p>Desenvolvimento de soluções tecnológicas para <span class="highlight">autonomia e eficiência</span></p>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">🔌</span>
+                    <h4>APIs Inteligentes</h4>
+                    <p>Integração entre sistemas para fluxo automatizado de dados e processos</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📱</span>
+                    <h4>Autoatendimento</h4>
+                    <p>Clientes resolvem questões de forma rápida e autônoma via digital</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🤖</span>
+                    <h4>Inteligência Artificial</h4>
+                    <p>IA para análise, predição e recomendações em tempo real</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Os Primeiros Resultados -->
+    <div class="slide" data-slide="7">
+        <div class="slide-content">
+            <h2>Os Primeiros Resultados</h2>
+            <p>A transformação começa a gerar impacto</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">📈</span>
+                    <h4>Performance em Alta</h4>
+                    <p>Taxas de recuperação começam a subir com processos mais inteligentes</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">😊</span>
+                    <h4>Equipe Engajada</h4>
+                    <p>Operadores motivados com ferramentas modernas e reconhecimento</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚡</span>
+                    <h4>Agilidade</h4>
+                    <p>Processos mais rápidos e decisões baseadas em dados</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎯</span>
+                    <h4>Foco no Cliente</h4>
+                    <p>Experiência melhorada com autoatendimento e transparência</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: A Necessidade -->
+    <div class="slide" data-slide="8">
+        <div class="slide-content">
+            <h2>A Necessidade</h2>
+            <p>Com squads funcionando e APIs rodando, surge uma nova questão:</p>
+            <div class="quote">
+                Como integrar tudo isso em um único ecossistema? Como dar aos operadores uma visão unificada e ferramentas realmente poderosas?
+                <div class="quote-author">— A pergunta que mudaria tudo</div>
+            </div>
+            <p style="margin-top: 60px; font-size: 2rem; color: #007AFF;">A resposta viria na próxima fase da jornada...</p>
+        </div>
+    </div>
+
+    <!-- Slide 10: Continua -->
+    <div class="slide" data-slide="9">
+        <div class="slide-content">
+            <div class="icon">✨</div>
+            <h2>A História Continua</h2>
+            <p>Esta foi a Parte 1: A fundação da transformação</p>
+            <p>Na Parte 2, você descobrirá como nasceu o <span class="highlight">Cobdesk</span></p>
+            <a href="#" class="next-button" onclick="alert('Parte 2 em breve!'); return false;">Continuar →</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="slide-indicator"></div>
+    <div class="nav-hint">Clique ou use as setas para navegar</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const indicator = document.querySelector('.slide-indicator');
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === 0) dot.classList.add('active');
+            indicator.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        // Click to advance
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('a') && !e.target.closest('.dot')) {
+                nextSlide();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+            });
+        });
+    </script>
+</body>
+</html>
